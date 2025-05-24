@@ -1,1 +1,1 @@
-# PurrPurrCoffee
+<h1 style="float:left;"><img src="Assets/PurrPurrCoffee/Content/Sprites/GameLogoDark.png" width=64 height=64 style="vertical-align: middle;"> Purr-Purr Coffee</h1>

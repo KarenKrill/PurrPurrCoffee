@@ -1,0 +1,163 @@
+name: ReleaseToGithub
+
+on:
+  push:
+    branches: ["main"]
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_dispatch: # to run manually
+
+env:
+    BUILD_DIRECTORY_POSTFIX: .Build
+    BUILD_WORKFLOW_NAME: BuildWorkflow.yml
+
+jobs:
+
+  ObtainVersionInfo:
+    name: Obtain version info
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Obtain version info
+        run: |
+          echo MAJOR_VERSION=$(echo ${{ github.ref_name }} | cut -d. -f1 | sed -e "s/^v//") >> $GITHUB_ENV
+          echo TAG_COMMIT_SHA=$(git show -s '${{ github.ref_name }}^{commit}' --format='%H') >> $GITHUB_ENV
+    outputs:
+      MAJOR_VERSION: ${{ env.MAJOR_VERSION }}
+      TAG_COMMIT_SHA: ${{ env.TAG_COMMIT_SHA }}
+
+  AwaitBuildWorkflow:
+    name: Analyse build workflow
+    needs: [ObtainVersionInfo]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Find build run id
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_COMMIT_SHA: ${{ needs.ObtainVersionInfo.outputs.TAG_COMMIT_SHA }}
+        run: |
+          echo BUILD_RUN_ID=$(gh run list --commit ${{ env.TAG_COMMIT_SHA }} --workflow=${{ env.BUILD_WORKFLOW_NAME }} --json databaseId --jq '.[] | .databaseId') >> $GITHUB_ENV
+      - name: Print build run id
+        run: echo "BUILD_RUN_ID = $BUILD_RUN_ID"
+      - name: Get owner/repo names
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_COMMIT_SHA: ${{ needs.AnalyseVersionChanges.outputs.TAG_COMMIT_SHA }}
+        run: |
+          echo GITHUB_REPO=${GITHUB_REPOSITORY#*/} >> $GITHUB_ENV
+          echo GITHUB_OWNER=${GITHUB_REPOSITORY%/*} >> $GITHUB_ENV
+      - name: Await Build Run (${{ env.BUILD_WORKFLOW_NAME }}/${{ env.TAG_COMMIT_SHA }})
+        uses: Codex-/await-remote-run@v1.0.0
+        with:
+            token: ${{ github.token }}
+            run_id: ${{ env.BUILD_RUN_ID }}
+            repo: ${{ env.GITHUB_REPO }}
+            owner: ${{ env.GITHUB_OWNER }}
+            run_timeout_seconds: 1800 # Timeout - 30 minutes
+            poll_interval_ms: 5000 # Optional
+    outputs:
+      BUILD_RUN_ID: ${{ env.BUILD_RUN_ID }}
+  
+  CreateRelease:
+    name: Create release
+    needs: [ObtainVersionInfo]
+    if: needs.ObtainVersionInfo.outputs.MAJOR_VERSION > 0 && !endsWith(github.ref_name, 'alpha') && !endsWith(github.ref_name, 'beta')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+            --generate-notes \
+            --draft
+
+  CreatePreRelease:
+    name: Create pre-release
+    needs: [ObtainVersionInfo]
+    if: needs.ObtainVersionInfo.outputs.MAJOR_VERSION == 0 || endsWith(github.ref_name, 'alpha') || endsWith(github.ref_name, 'beta')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create pre-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create "$tag" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+            --generate-notes \
+            --draft \
+            --prerelease
+
+  UploadReleaseBuilds:
+    name: Upload release builds
+    needs: [AwaitBuildWorkflow, CreateRelease, CreatePreRelease]
+    if: always() && (needs.CreateRelease.result == 'success' || needs.CreatePreRelease.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download builds artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUILD_RUN_ID: ${{ needs.AwaitBuildWorkflow.outputs.BUILD_RUN_ID }}
+        run: |
+          mkdir -p artifacts
+          gh run download $BUILD_RUN_ID --dir artifacts
+      - name: Builds packing
+        env:
+          BUILD_VERSION: ${{ github.ref_name }}
+        run: |
+            cd artifacts
+            PROJECT_NAME=${GITHUB_REPOSITORY#*/}
+            for BUILD_DIR in *; do
+              if [ -d "$BUILD_DIR" ]; then
+                BUILD_DIR_WITHOUT_PROJECT_NAME=${BUILD_DIR#$PROJECT_NAME.}
+                BUILD_NAME=$PROJECT_NAME.$BUILD_VERSION.${BUILD_DIR_WITHOUT_PROJECT_NAME%*$BUILD_DIRECTORY_POSTFIX}
+                echo BuildDirWithoutProjName = $BUILD_DIR_WITHOUT_PROJECT_NAME
+                echo BuildName = $BUILD_NAME
+                rm -rf $BUILD_DIR/*NotShip*
+                rm -rf $BUILD_DIR/*DontShip*
+                FILES_COUNT=$(($(ls "$BUILD_DIR" -1a | wc -l) - 2))
+                if (($FILES_COUNT == 1)); then # no need to pack a single file
+                    FILENAME=$(ls "$BUILD_DIR" -1a | head -n 3 | tail -n 1) ## there are 3 files: ".", ".." and "single build file"
+                    echo $BUILD_DIR/$FILENAME moved to $BUILD_NAME.${FILENAME##*.}
+                    mv "$BUILD_DIR/$FILENAME" "$BUILD_NAME.${FILENAME##*.}"
+                else # pack build files (except DontShip dir)
+                    cd $BUILD_DIR
+                    BUILD_PACK_NAME="$BUILD_NAME.zip"
+                    echo $BUILD_PACK_NAME packing...
+                    zip -r ../$BUILD_PACK_NAME ./*
+                    cd ..
+                fi
+                rm -rf "$BUILD_DIR"
+              fi
+            done
+            echo "Packs list:"
+            ls -l
+            cd ..
+      - name: Upload builds packs to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for BUILD_PACK in artifacts/*; do
+            echo "Uploading $BUILD_PACK"
+            gh release upload "${{ github.ref_name }}" "$BUILD_PACK" --repo "${{ github.repository }}"
+          done

@@ -1,0 +1,24 @@
+{
+    "name": "PurrPurrCoffee.UI.Presenters",
+    "rootNamespace": "PurrPurrCoffee.UI.Presenters",
+    "references": [
+        "GUID:9ce69da7243473a4f8e5dd1e9dbae22d",
+        "GUID:760c2e9496ca26e4d8f30deca2d52b53",
+        "GUID:7a46791a36c29db4382df4ea59e1f085",
+        "GUID:eb77829cf584bef44aef3b2d63d955db",
+        "GUID:a00509254bb803a4d89b998f2d85ff80",
+        "GUID:2e99e42ee65569241a08ab41d4155790",
+        "GUID:c912c18b242cf434fad0743e467b14c4",
+        "GUID:5eaf6dbab0736024e844b9e44140a130",
+        "GUID:d4fc5e891d3a0e14d83b7db97c334542"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
