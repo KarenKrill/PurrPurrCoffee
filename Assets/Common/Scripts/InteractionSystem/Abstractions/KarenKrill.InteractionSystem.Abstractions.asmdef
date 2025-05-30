@@ -1,0 +1,14 @@
+{
+    "name": "KarenKrill.InteractionSystem.Abstractions",
+    "rootNamespace": "KarenKrill.InteractionSystem.Abstractions",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
