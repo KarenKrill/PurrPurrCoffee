@@ -48,11 +48,6 @@ namespace PurrPurrCoffee.Input
         public event Action? AttackCancel;
         public event Action? Interact;
         public event Action? InteractCancel;
-        public event Action? HotSlot1;
-        public event Action? HotSlot2;
-        public event Action? HotSlot3;
-        public event Action? HotSlot4;
-        public event Action? Heal;
         public event Action? Pause;
 
         #endregion
@@ -76,6 +71,8 @@ namespace PurrPurrCoffee.Input
         public event Action? MiddleClick;
 
         #endregion
+
+        public event Action<ActionMap>? ActionMapChanged;
 
 #nullable restore
 
@@ -104,6 +101,7 @@ namespace PurrPurrCoffee.Input
                 default:
                     throw new NotImplementedException($"\"{actionMap}\" {nameof(ActionMap)} setting isn't implemented");
             }
+            ActionMapChanged?.Invoke(actionMap);
             _logger.Log($"{actionMap} {nameof(ActionMap)} enabled");
         }
         public void Disable()
@@ -218,46 +216,6 @@ namespace PurrPurrCoffee.Input
                 IsInteractActive = false;
                 _logger.Log($"{nameof(OnInteract)} canceled");
                 InteractCancel?.Invoke();
-            }
-        }
-        public void OnHotSlot1(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _logger.Log($"{nameof(OnHotSlot1)} performed");
-                HotSlot1?.Invoke();
-            }
-        }
-        public void OnHotSlot2(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _logger.Log($"{nameof(OnHotSlot2)} performed");
-                HotSlot2?.Invoke();
-            }
-        }
-        public void OnHotSlot3(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _logger.Log($"{nameof(OnHotSlot3)} performed");
-                HotSlot3?.Invoke();
-            }
-        }
-        public void OnHotSlot4(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _logger.Log($"{nameof(OnHotSlot4)} performed");
-                HotSlot4?.Invoke();
-            }
-        }
-        public void OnHeal(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                _logger.Log($"{nameof(OnHeal)} performed");
-                Heal?.Invoke();
             }
         }
         public void OnPause(InputAction.CallbackContext context)
