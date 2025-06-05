@@ -94,3 +94,4 @@ crashlytics-build.properties
 *.wav
 *.mp3
 *.exr
+!/[Aa]ssets/PurrPurrCoffee/Content/Sprites/GameLogoDark.png
