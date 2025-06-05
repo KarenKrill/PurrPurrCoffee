@@ -19,8 +19,8 @@ namespace PurrPurrCoffee.UI.Views
         #endregion
 
 #nullable enable
-        public event Action? Apply;
-        public event Action? Cancel;
+        public event Action? ApplyRequested;
+        public event Action? CancelRequested;
 #nullable restore
 
         [SerializeField]
@@ -41,7 +41,7 @@ namespace PurrPurrCoffee.UI.Views
             _cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
         }
 
-        private void OnApplyButtonClicked() => Apply?.Invoke();
-        private void OnCancelButtonClicked() => Cancel?.Invoke();
+        private void OnApplyButtonClicked() => ApplyRequested?.Invoke();
+        private void OnCancelButtonClicked() => CancelRequested?.Invoke();
     }
 }

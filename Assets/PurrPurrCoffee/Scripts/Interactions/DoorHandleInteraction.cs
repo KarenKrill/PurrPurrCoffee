@@ -1,11 +1,10 @@
-using KarenKrill.InteractionSystem.Abstractions;
-using KarenKrill.InteractionSystem;
 using UnityEngine;
+
+using KarenKrill.InteractionSystem.Abstractions;
 
 namespace PurrPurrCoffee.Interactions
 {
-    [RequireComponent(typeof(Outline))]
-    public class DoorHandleInteraction : InteractableBase, IInteractable
+    public class DoorHandleInteraction : OutlineInteractableBase, IInteractable
     {
         protected override void OnInteraction()
         {
@@ -18,19 +17,8 @@ namespace PurrPurrCoffee.Interactions
                 _doorOpener.Open();
             }
         }
-        protected override void OnInteractionAvailabilityChanged(bool available)
-        {
-            Debug.Log($"{gameObject.name} InteractionAvailability changed to {available}");
-            _outline.enabled = available;
-        }
 
         [SerializeField]
         private DoorOpener _doorOpener;
-        private Outline _outline;
-
-        private void Awake()
-        {
-            _outline = GetComponent<Outline>();
-        }
     }
 }

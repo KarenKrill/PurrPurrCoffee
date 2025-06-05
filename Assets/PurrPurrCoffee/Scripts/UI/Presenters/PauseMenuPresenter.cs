@@ -27,19 +27,19 @@ namespace PurrPurrCoffee.UI.Presenters
 
         protected override void Subscribe()
         {
-            View.Resume += OnResume;
-            View.Restart += OnRestart;
-            View.Settings += OnSettings;
-            View.MainMenuExit += OnMainMenuExit;
-            View.Exit += OnExit;
+            View.ResumeRequested += OnResume;
+            View.RestartRequested += OnRestart;
+            View.SettingsOpenRequested += OnSettings;
+            View.MainMenuExitRequested += OnMainMenuExit;
+            View.ExitRequested += OnExit;
         }
         protected override void Unsubscribe()
         {
-            View.Resume -= OnResume;
-            View.Restart -= OnRestart;
-            View.Settings -= OnSettings;
-            View.MainMenuExit -= OnMainMenuExit;
-            View.Exit -= OnExit;
+            View.ResumeRequested -= OnResume;
+            View.RestartRequested -= OnRestart;
+            View.SettingsOpenRequested -= OnSettings;
+            View.MainMenuExitRequested -= OnMainMenuExit;
+            View.ExitRequested -= OnExit;
         }
 
         private readonly ISettingsMenuPresenter _settingsPresenter;

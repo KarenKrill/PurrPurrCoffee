@@ -23,15 +23,15 @@ namespace PurrPurrCoffee.UI.Presenters
 
         protected override void Subscribe()
         {
-            View.Restart += OnRestart;
-            View.MainMenuExit += OnMainMenuExit;
-            View.Exit += OnExit;
+            View.RestartRequested += OnRestart;
+            View.MainMenuExitRequested += OnMainMenuExit;
+            View.ExitRequested += OnExit;
         }
         protected override void Unsubscribe()
         {
-            View.Restart -= OnRestart;
-            View.MainMenuExit -= OnMainMenuExit;
-            View.Exit -= OnExit;
+            View.RestartRequested -= OnRestart;
+            View.MainMenuExitRequested -= OnMainMenuExit;
+            View.ExitRequested -= OnExit;
         }
 
         private void OnRestart() => Restart?.Invoke();

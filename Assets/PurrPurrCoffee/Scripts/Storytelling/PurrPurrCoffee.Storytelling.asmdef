@@ -1,0 +1,20 @@
+{
+    "name": "PurrPurrCoffee.Storytelling",
+    "rootNamespace": "PurrPurrCoffee.Storytelling",
+    "references": [
+        "GUID:f2b1cb4b2bc9d9a4c9b3de62a541d591",
+        "GUID:760c2e9496ca26e4d8f30deca2d52b53",
+        "GUID:5eaf6dbab0736024e844b9e44140a130",
+        "GUID:1149c39a00cd39a4fa70b4ea9f240fc1",
+        "GUID:58bed0e7c5306824586d7eda03609289"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

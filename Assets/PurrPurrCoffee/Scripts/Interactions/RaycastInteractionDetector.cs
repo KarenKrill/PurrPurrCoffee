@@ -8,7 +8,7 @@ namespace PurrPurrCoffee.Interactions
 {
     using Input.Abstractions;
 
-    public class RaycastInteractionDetector : RaycastInteractionDetectorBase, IInteractionDetector
+    public class RaycastInteractionDetector : RaycastInteractionDetectorBase
     {
         [Inject]
         public void Initialize(IInputActionService inputActionsService)
@@ -31,9 +31,19 @@ namespace PurrPurrCoffee.Interactions
 
         private void OnLook(Vector2 lookDelta)
         {
-            var cameraTransform = Camera.main.transform;
-            var ray = new Ray(cameraTransform.position, cameraTransform.forward);
-            OnLookChanged(ray);
+            //var cameraTransform = Camera.main.transform;
+            //var ray = new Ray(cameraTransform.position, cameraTransform.forward);
+            //var ray = new Ray(_interactor.transform.position, _interactor.transform.forward);
+            var ray = new Ray(_interactorEyePoint.position, _interactorLookPoint.position - _interactorEyePoint.position);
+            OnLookChanged(_interactor, ray);
         }
+        private void OnInteract() => OnInteract(_interactor);
+
+        [SerializeField]
+        private InteractorBase _interactor;
+        [SerializeField]
+        private Transform _interactorEyePoint;
+        [SerializeField]
+        private Transform _interactorLookPoint;
     }
 }

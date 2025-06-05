@@ -93,10 +93,12 @@ namespace PurrPurrCoffee.Input
                 case ActionMap.Player:
                     _playerControls.UI.Disable();
                     _playerControls.Player.Enable();
+                    Cursor.lockState = CursorLockMode.Locked;
                     break;
                 case ActionMap.UI:
                     _playerControls.Player.Disable();
                     _playerControls.UI.Enable();
+                    Cursor.lockState = CursorLockMode.None;
                     break;
                 default:
                     throw new NotImplementedException($"\"{actionMap}\" {nameof(ActionMap)} setting isn't implemented");
@@ -133,13 +135,11 @@ namespace PurrPurrCoffee.Input
             {
                 var moveDelta = context.ReadValue<Vector2>();
                 LastMoveDelta = moveDelta;
-                _logger.Log($"{nameof(OnMove)} performed: {moveDelta}");
                 Move?.Invoke(moveDelta);
             }
             else if (context.canceled)
             {
                 LastMoveDelta = Vector2.zero;
-                _logger.Log($"{nameof(OnMove)} canceled");
                 MoveCancel?.Invoke();
             }
         }
@@ -193,13 +193,11 @@ namespace PurrPurrCoffee.Input
             if (context.performed)
             {
                 IsAttackActive = true;
-                _logger.Log($"{nameof(OnAttack)} performed");
                 Attack?.Invoke();
             }
             else if (context.canceled)
             {
                 IsAttackActive = false;
-                _logger.Log($"{nameof(OnAttack)} canceled");
                 AttackCancel?.Invoke();
             }
         }
@@ -237,13 +235,11 @@ namespace PurrPurrCoffee.Input
             {
                 var value = context.ReadValue<Vector2>();
                 LastNavigateValue = value;
-                _logger.Log($"{nameof(OnNavigate)} performed: {value}");
                 Navigate?.Invoke(value);
             }
             else if (context.canceled)
             {
                 LastNavigateValue = Vector2.zero;
-                _logger.Log($"{nameof(OnNavigate)} canceled");
                 NavigateCancel?.Invoke();
             }
         }
@@ -267,13 +263,11 @@ namespace PurrPurrCoffee.Input
             {
                 var value = context.ReadValue<Vector2>();
                 LastScrollWheelValue = value;
-                _logger.Log($"{nameof(OnScrollWheel)} performed: {value}");
                 ScrollWheel?.Invoke(value);
             }
             else if (context.canceled)
             {
                 LastScrollWheelValue = Vector2.zero;
-                _logger.Log($"{nameof(OnScrollWheel)} canceled");
                 ScrollWheelCancel?.Invoke();
             }
         }

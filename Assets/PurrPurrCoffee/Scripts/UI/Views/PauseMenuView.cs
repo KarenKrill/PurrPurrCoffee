@@ -11,11 +11,11 @@ namespace PurrPurrCoffee.UI.Views
     public class PauseMenuView : ViewBehaviour, IPauseMenuView
     {
 #nullable enable
-        public event Action? Resume;
-        public event Action? Restart;
-        public event Action? Settings;
-        public event Action? MainMenuExit;
-        public event Action? Exit;
+        public event Action? ResumeRequested;
+        public event Action? RestartRequested;
+        public event Action? SettingsOpenRequested;
+        public event Action? MainMenuExitRequested;
+        public event Action? ExitRequested;
 #nullable restore
 
         [SerializeField]
@@ -46,10 +46,10 @@ namespace PurrPurrCoffee.UI.Views
             _exitButton.onClick.RemoveListener(OnExitButtonClicked);
         }
 
-        private void OnResumeButtonClicked() => Resume?.Invoke();
-        private void OnRestartButtonClicked() => Restart?.Invoke();
-        private void OnSettingsButtonClicked() => Settings?.Invoke();
-        private void OnMainMenuExitButtonClicked() => MainMenuExit?.Invoke();
-        private void OnExitButtonClicked() => Exit?.Invoke();
+        private void OnResumeButtonClicked() => ResumeRequested?.Invoke();
+        private void OnRestartButtonClicked() => RestartRequested?.Invoke();
+        private void OnSettingsButtonClicked() => SettingsOpenRequested?.Invoke();
+        private void OnMainMenuExitButtonClicked() => MainMenuExitRequested?.Invoke();
+        private void OnExitButtonClicked() => ExitRequested?.Invoke();
     }
 }

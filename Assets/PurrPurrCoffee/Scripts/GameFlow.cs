@@ -21,7 +21,11 @@ namespace PurrPurrCoffee
         }
         public void Exit()
         {
-            throw new System.NotImplementedException();
+#if EDITOR
+            UnityEditor.EditorApplication.ExitPlaymode();
+#else // для мобильных и веба не сработает, надо предусмотреть
+            Application.Quit();
+#endif
         }
         public void FinishLevel()
         {
@@ -50,11 +54,11 @@ namespace PurrPurrCoffee
         }
         public void PauseLevel()
         {
-            throw new System.NotImplementedException();
+            _stateSwitcher.TransitTo(GameState.Pause);
         }
         public void PlayLevel()
         {
-            throw new System.NotImplementedException();
+            _stateSwitcher.TransitTo(GameState.Gameplay);
         }
         public void RestartGame()
         {

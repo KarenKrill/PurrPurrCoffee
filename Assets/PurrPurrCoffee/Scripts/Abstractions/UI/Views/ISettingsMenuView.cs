@@ -16,7 +16,7 @@ namespace PurrPurrCoffee.UI.Views.Abstractions
         bool ShowFps { get; set; }
         #endregion
 
-        event Action? Apply;
-        event Action? Cancel;
+        event Action? ApplyRequested;
+        event Action? CancelRequested;
     }
 }

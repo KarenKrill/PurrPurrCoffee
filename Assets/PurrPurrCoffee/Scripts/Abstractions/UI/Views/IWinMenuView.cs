@@ -8,8 +8,8 @@ namespace PurrPurrCoffee.UI.Views.Abstractions
 {
     public interface IWinMenuView : IView
     {
-        public event Action? Restart;
-        public event Action? MainMenuExit;
-        public event Action? Exit;
+        public event Action? RestartRequested;
+        public event Action? MainMenuExitRequested;
+        public event Action? ExitRequested;
     }
 }
