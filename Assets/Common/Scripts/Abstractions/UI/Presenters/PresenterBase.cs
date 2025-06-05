@@ -15,11 +15,16 @@
             View ??= _viewFactory.Create<T>();
             Subscribe();
             View.Show();
+            _isEnabled = true;
         }
         public virtual void Disable()
         {
-            Unsubscribe();
-            View.Close();
+            if (_isEnabled)
+            {
+                Unsubscribe();
+                View.Close();
+                _isEnabled = false;
+            }
         }
 
         /// <summary>
@@ -32,5 +37,6 @@
         protected abstract void Unsubscribe();
 
         private readonly IViewFactory _viewFactory;
+        private bool _isEnabled = false;
     }
 }

@@ -19,6 +19,7 @@ namespace KarenKrill.Movement
 
         public bool EnableCharController { get => _characterController.enabled; set => _characterController.enabled = value; }
         public Vector3 MoveDirection { get => _moveDirection; set => _moveDirection = value; }
+        public Vector2 LookDirection { get => _lookDirection; set => _lookDirection = value; }
 
         [SerializeField]
         private CharacterController _characterController;
@@ -36,10 +37,16 @@ namespace KarenKrill.Movement
         private float _slidingDecelerationFactor = 3f;
         [SerializeField]
         private bool _useRootMotion = false;
+        /// <summary>
+        /// Use MoveDirection towards or LookDirection for character rotation
+        /// </summary>
+        [SerializeField]
+        private bool _thirdPerson = false;
 
         private bool _isPulsedUp = false, _isSliding = false, _isGrounded = false;
         private bool _isGroundedRecently = false;
         private Vector3 _moveDirection = Vector3.zero;
+        private Vector3 _lookDirection = Vector2.zero;
         private float _fallSpeed;
         private float _pulseUpGracePeriod = 0.2f;
         private float _pulseUpDistance = 2.0f, _inAirHorizontalSpeed = 3.0f;
@@ -149,7 +156,7 @@ namespace KarenKrill.Movement
 
             // Direction & DirectionInputMagnitude usings
             var cameraRelativeQuaternion = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up);
-            var direction = cameraRelativeQuaternion * new Vector3(_moveDirection.x, _moveDirection.y, _moveDirection.z);
+            var direction = cameraRelativeQuaternion * _moveDirection;// new Vector3(_moveDirection.x, _moveDirection.y, _moveDirection.z);
             if (direction.magnitude > 1)
             {
                 direction.Normalize();
@@ -178,19 +185,28 @@ namespace KarenKrill.Movement
 
             // Direction usings
             bool isMoving = direction != Vector3.zero;
-            if (isMoving)
+            bool isLooking = _lookDirection != Vector3.zero;
+            if (isMoving || isLooking)
             {
-                Quaternion rotationQuaternion = Quaternion.LookRotation(direction, Vector3.up);
-                _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, rotationQuaternion, _rotationDegreeSpeed * Time.deltaTime);
+                if (_thirdPerson)
+                {
+                    Quaternion rotationQuaternion = Quaternion.LookRotation(direction, Vector3.up);
+                    _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, rotationQuaternion, _rotationDegreeSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, cameraRelativeQuaternion, 360);
+                }
             }
 
             if (_animator != null)
             {
-                _animator.SetFloat("Input Magnitude", directionMagnitude, 0.5f, Time.deltaTime);
+                _animator.SetFloat("InputMagnitude", directionMagnitude, 0.5f, Time.deltaTime);
                 _animator.SetBool("IsGrounded", _isGrounded);
                 _animator.SetBool("IsJumping", _isPulsedUp);
                 _animator.SetBool("IsFalling", isFalling);
                 _animator.SetBool("IsMoving", isMoving);
+                _animator.SetBool("IsLooking", isLooking);
             }
         }
         public void PulseUp(float distance, float gracePeriod, float inAirHorizontalSpeed)

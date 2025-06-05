@@ -4,26 +4,27 @@ using Zenject;
 namespace KarenKrill.InteractionSystem
 {
     using Abstractions;
+    using NUnit.Framework;
 
     public abstract class InteractionTargetBase : MonoBehaviour, IInteractionTarget
     {
         public abstract IInteractable Interactable { get; }
         
         [Inject]
-        public void Initialize(IInteractionDetector interactionDetector)
+        public void Initialize(IInteractionTargetRegistry interactionTargetRegistry)
         {
-            _interactionDetector = interactionDetector;
+            _interactionTargetRegistry = interactionTargetRegistry;
         }
 
         protected virtual void OnEnable()
         {
-            _interactionDetector?.Register(this);
+            _interactionTargetRegistry.Register(this);
         }
         protected virtual void OnDisable()
         {
-            _interactionDetector?.Unregister(this);
+            _interactionTargetRegistry.Unregister(this);
         }
 
-        private IInteractionDetector _interactionDetector;
+        private IInteractionTargetRegistry _interactionTargetRegistry;
     }
 }

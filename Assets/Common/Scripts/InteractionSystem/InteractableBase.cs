@@ -2,7 +2,6 @@
 
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace KarenKrill.InteractionSystem
 {
@@ -10,18 +9,18 @@ namespace KarenKrill.InteractionSystem
 
     public abstract class InteractableBase : MonoBehaviour, IInteractable
     {
-        public event Action? Interaction;
-        public event Action<bool>? InteractionAvailabilityChanged;
+        public event Action<IInteractor>? Interaction;
+        public event Action<IInteractor, bool>? InteractionAvailabilityChanged;
 
-        public void Interact()
+        public void Interact(IInteractor interactor)
         {
             OnInteraction();
-            Interaction?.Invoke();
+            Interaction?.Invoke(interactor);
         }
-        public void SetInteractionAvailability(bool available = true)
+        public void SetInteractionAvailability(IInteractor interactor, bool available = true)
         {
             OnInteractionAvailabilityChanged(available);
-            InteractionAvailabilityChanged?.Invoke(available);
+            InteractionAvailabilityChanged?.Invoke(interactor, available);
         }
 
         protected abstract void OnInteraction();

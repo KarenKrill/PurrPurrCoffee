@@ -6,10 +6,10 @@ namespace KarenKrill.InteractionSystem.Abstractions
 {
     public interface IInteractable
     {
-        event Action? Interaction;
-        event Action<bool>? InteractionAvailabilityChanged;
+        event Action<IInteractor>? Interaction;
+        event Action<IInteractor, bool>? InteractionAvailabilityChanged;
 
-        void Interact();
-        void SetInteractionAvailability(bool available = true);
+        void Interact(IInteractor interactor);
+        void SetInteractionAvailability(IInteractor interactor, bool available = true);
     }
 }

@@ -11,7 +11,6 @@ namespace KarenKrill.Movement
         public void Initialize(IInputActionService inputActionService)
         {
             _inputActionService = inputActionService;
-            Debug.Log($"{nameof(CharacterMoveController)} Intialize");
         }
 
         [SerializeField]
@@ -50,6 +49,7 @@ namespace KarenKrill.Movement
         {
             base.Update();
             MoveDirection = new Vector3(_inputActionService.LastMoveDelta.x, 0, _inputActionService.LastMoveDelta.y);
+            LookDirection = _inputActionService.LastLookDelta;
             if (IsPulsedUp)
             {
                 if (!_isJumpPressed && IsFalling) // если короткое нажатие
