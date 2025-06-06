@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8026119982307848267
 Transform:
   m_ObjectHideFlags: 0
@@ -901,6 +901,7 @@ MonoBehaviour:
   _lightningAudioSource: {fileID: 3726104553413243196}
   _lightningStrikeLight: {fileID: 1485533128904510437}
   _creepyMan: {fileID: 1701428008221383658}
+  _rainParticleSystem: {fileID: 0}
 --- !u!82 &2864135333311147572
 AudioSource:
   m_ObjectHideFlags: 0
