@@ -1,0 +1,20 @@
+{
+    "name": "PurrPurrCoffee.Interactions",
+    "rootNamespace": "PurrPurrCoffee.Interactions",
+    "references": [
+        "GUID:70b64406575c68f4385cf2b9d0e16eff",
+        "GUID:f9f8cf945412fb14cb92e8e58a58b795",
+        "GUID:f2b1cb4b2bc9d9a4c9b3de62a541d591",
+        "GUID:1149c39a00cd39a4fa70b4ea9f240fc1",
+        "GUID:96feb2566153bbc40bf0c282d9d9943d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

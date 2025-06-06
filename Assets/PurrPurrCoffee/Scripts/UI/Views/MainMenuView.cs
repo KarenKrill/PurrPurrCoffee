@@ -11,9 +11,9 @@ namespace PurrPurrCoffee.UI.Views
     public class MainMenuView : ViewBehaviour, IMainMenuView
     {
 #nullable enable
-        public event Action? NewGame;
-        public event Action? Settings;
-        public event Action? Exit;
+        public event Action? NewGameRequested;
+        public event Action? SettingsOpenRequested;
+        public event Action? ExitRequested;
 #nullable restore
 
         [SerializeField]
@@ -36,8 +36,8 @@ namespace PurrPurrCoffee.UI.Views
             _exitButton.onClick.RemoveListener(OnExitButtonClicked);
         }
 
-        private void OnNewGameButtonClicked() => NewGame?.Invoke();
-        private void OnSettingsButtonClicked() => Settings?.Invoke();
-        private void OnExitButtonClicked() => Exit?.Invoke();
+        private void OnNewGameButtonClicked() => NewGameRequested?.Invoke();
+        private void OnSettingsButtonClicked() => SettingsOpenRequested?.Invoke();
+        private void OnExitButtonClicked() => ExitRequested?.Invoke();
     }
 }

@@ -11,6 +11,7 @@ using KarenKrill.UI.Views;
 using KarenKrill.Logging;
 using KarenKrill.Diagnostics;
 using KarenKrill.Utilities;
+using KarenKrill.InteractionSystem;
 
 namespace PurrPurrCoffee
 {
@@ -18,29 +19,29 @@ namespace PurrPurrCoffee
     using Input.Abstractions;
     using Input;
     using UnityEngine.UI;
+    using Storytelling;
 
     public class ProjectInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<GameSession>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<ClientController>().FromComponentInHierarchy(false).AsSingle();
+            Container.BindInterfacesAndSelfTo<WeatherController>().FromComponentInHierarchy(false).AsSingle();
             InstallSettings();
-            Container.Bind<IInputActionService>().To<InputActionService>().FromNew().AsSingle().OnInstantiated((context, target) =>
-            {
-                if (target is InputActionService inputActionService)
-                {
-                    inputActionService.SetActionMap(ActionMap.UI);
-                }
-            }).NonLazy();
+            Container.Bind<IInputActionService>().To<InputActionService>().FromNew().AsSingle();
 #if DEBUG
             Container.Bind<ILogger>().To<Logger>().FromNew().AsSingle().WithArguments(new DebugLogHandler());
 #else
             Container.Bind<ILogger>().To<StubLogger>().FromNew().AsSingle();
 #endif
+            Container.BindInterfacesAndSelfTo<DialogueService>().AsSingle().WithArguments(_storyInkJson.text);
             Container.BindInterfacesAndSelfTo<GameFlow>().AsSingle();
             InstallGameStateMachine();
             InstallViewFactory();
             Container.BindInterfacesAndSelfTo<DiagnosticsProvider>().FromInstance(_diagnosticsProvider).AsSingle();
             InstallPresenterBindings();
+            Container.BindInterfacesAndSelfTo<InteractionTargetRegistry>().FromNew().AsSingle();
         }
 
         [SerializeField]
@@ -49,6 +50,8 @@ namespace PurrPurrCoffee
         List<GameObject> _uiPrefabs;
         [SerializeField]
         DiagnosticsProvider _diagnosticsProvider;
+        [SerializeField]
+        TextAsset _storyInkJson;
         private void InstallSettings()
         {
             var qualityLevel = PlayerPrefs.GetInt("Settings.Graphics.QualityLevel", (int)QualityLevel.High);

@@ -25,15 +25,15 @@ namespace PurrPurrCoffee.UI.Presenters
 
         protected override void Subscribe()
         {
-            View.NewGame += OnNewGame;
-            View.Settings += OnSettings;
-            View.Exit += OnExit;
+            View.NewGameRequested += OnNewGame;
+            View.SettingsOpenRequested += OnSettings;
+            View.ExitRequested += OnExit;
         }
         protected override void Unsubscribe()
         {
-            View.NewGame -= OnNewGame;
-            View.Settings -= OnSettings;
-            View.Exit -= OnExit;
+            View.NewGameRequested -= OnNewGame;
+            View.SettingsOpenRequested -= OnSettings;
+            View.ExitRequested -= OnExit;
         }
 
         private readonly ISettingsMenuPresenter _settingsPresenter;

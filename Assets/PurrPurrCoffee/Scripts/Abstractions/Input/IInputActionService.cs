@@ -46,11 +46,6 @@ namespace PurrPurrCoffee.Input.Abstractions
         public event Action? AttackCancel;
         public event Action? Interact;
         public event Action? InteractCancel;
-        public event Action? HotSlot1;
-        public event Action? HotSlot2;
-        public event Action? HotSlot3;
-        public event Action? HotSlot4;
-        public event Action? Heal;
         public event Action? Pause;
 
         #endregion
@@ -80,6 +75,8 @@ namespace PurrPurrCoffee.Input.Abstractions
         public event Action? MiddleClick;
 
         #endregion
+
+        public event Action<ActionMap>? ActionMapChanged;
 
         public void SetActionMap(ActionMap actionMap);
         public void Disable();

@@ -9,6 +9,6 @@ namespace PurrPurrCoffee.UI.Views.Abstractions
     public interface ISceneLoadView : IView
     {
         public float Progress { set; }
-        public event Action ReadyToStartConfirm;
+        public event Action StartConfirmed;
     }
 }

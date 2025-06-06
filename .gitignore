@@ -76,3 +76,22 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Ignore big files
+*.[Ff][Bb][Xx]
+*.[Pp][Nn][Gg]
+*.[Tt][Gg][Aa]
+*.[Bb][Mm][Pp]
+*.blend
+*.jpeg
+*.jpg
+*.glb
+*.zip
+*.hdr
+*.dae
+*.tif
+*.wav
+*.wav
+*.mp3
+*.exr
+!/[Aa]ssets/PurrPurrCoffee/Content/Sprites/GameLogoDark.png

@@ -26,14 +26,14 @@ namespace PurrPurrCoffee.UI.Presenters
         {
             _gameSettings.ShowFpsChanged += OnModelShowFpsChanged;
             View.ShowFps = _gameSettings.ShowFps;
-            View.Apply += OnApply;
-            View.Cancel += OnCancel;
+            View.ApplyRequested += OnApply;
+            View.CancelRequested += OnCancel;
         }
         protected override void Unsubscribe()
         {
             _gameSettings.ShowFpsChanged -= OnModelShowFpsChanged;
-            View.Apply -= OnApply;
-            View.Cancel -= OnCancel;
+            View.ApplyRequested -= OnApply;
+            View.CancelRequested -= OnCancel;
         }
 
         private readonly GameSettings _gameSettings;

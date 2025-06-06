@@ -5,6 +5,7 @@ using KarenKrill.StateSystem.Abstractions;
 namespace PurrPurrCoffee.GameStates
 {
     using Abstractions;
+    using PurrPurrCoffee.Input.Abstractions;
     using States;
     using UI.Presenters.Abstractions;
 

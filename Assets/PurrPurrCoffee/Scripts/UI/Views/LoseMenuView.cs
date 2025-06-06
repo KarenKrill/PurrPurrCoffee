@@ -11,9 +11,9 @@ namespace PurrPurrCoffee.UI.Views
     public class LoseMenuView : ViewBehaviour, ILoseMenuView
     {
 #nullable enable
-        public event Action? Restart;
-        public event Action? MainMenuExit;
-        public event Action? Exit;
+        public event Action? RestartRequested;
+        public event Action? MainMenuExitRequested;
+        public event Action? ExitRequested;
 #nullable restore
 
         [SerializeField]
@@ -36,8 +36,8 @@ namespace PurrPurrCoffee.UI.Views
             _exitButton.onClick.RemoveListener(OnExitButtonClicked);
         }
 
-        private void OnRestartButtonClicked() => Restart?.Invoke();
-        private void OnMainMenuExitButtonClicked() => MainMenuExit?.Invoke();
-        private void OnExitButtonClicked() => Exit?.Invoke();
+        private void OnRestartButtonClicked() => RestartRequested?.Invoke();
+        private void OnMainMenuExitButtonClicked() => MainMenuExitRequested?.Invoke();
+        private void OnExitButtonClicked() => ExitRequested?.Invoke();
     }
 }
