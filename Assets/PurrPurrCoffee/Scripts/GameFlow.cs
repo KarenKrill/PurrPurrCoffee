@@ -21,7 +21,7 @@ namespace PurrPurrCoffee
         }
         public void Exit()
         {
-#if EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.ExitPlaymode();
 #else // для мобильных и веба не сработает, надо предусмотреть
             Application.Quit();

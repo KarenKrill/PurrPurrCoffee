@@ -58,6 +58,10 @@ namespace PurrPurrCoffee.UI.Views
         {
             _buttonsPool = new(_dialogueChoiceButtonPrefab, _choiceButtonsParent, _defaultChoicesCapacity);
         }
+        private void Start()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(gameObject.GetComponent<RectTransform>());
+        }
         private void OnDestroy()
         {
             _buttonsPool.Dispose();

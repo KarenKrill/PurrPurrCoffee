@@ -34,6 +34,8 @@ namespace PurrPurrCoffee.GameStates
         public override void Exit(GameState nextState)
         {
             base.Exit(nextState);
+            _mainMenuPresenter.NewGame -= OnNewGame;
+            _mainMenuPresenter.Exit -= OnExit;
             _logger.Log($"{nameof(MainMenuState)}.{nameof(Exit)}()");
         }
         

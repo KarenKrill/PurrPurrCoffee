@@ -31,6 +31,7 @@ namespace PurrPurrCoffee.GameStates
             _logger.Log($"{GetType().Name}.{nameof(Enter)}()");
             _inputActionService.Cancel += OnResume;
             _pauseMenuPresenter.Resume += OnResume;
+            _pauseMenuPresenter.Exit += OnExit;
             _inputActionService.SetActionMap(ActionMap.UI);
         }
         public override void Exit(GameState nextState)
@@ -50,5 +51,6 @@ namespace PurrPurrCoffee.GameStates
         {
             _gameFlow.PlayLevel();
         }
+        private void OnExit() => _gameFlow.Exit();
     }
 }

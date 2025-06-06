@@ -90,7 +90,15 @@ public class WeatherController : MonoBehaviour, IWeatherController
         _lightningStrikeLight.SetActive(true);
         yield return new WaitForSeconds(.04f);
         _lightningStrikeLight.SetActive(false);
-        yield return new WaitForSeconds(9f);
+        yield return new WaitForSeconds(4f);
+        _lightningStrikeLight.SetActive(true);
+        yield return new WaitForSeconds(.07f);
+        _lightningStrikeLight.SetActive(false);
+        yield return new WaitForSeconds(.15f);
+        _lightningStrikeLight.SetActive(true);
+        yield return new WaitForSeconds(.03f);
+        _lightningStrikeLight.SetActive(false);
+        yield return new WaitForSeconds(4f);
         _lightningStrikeLight.SetActive(true);
         yield return new WaitForSeconds(.1f);
         _lightningStrikeLight.SetActive(false);

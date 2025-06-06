@@ -57,7 +57,10 @@ namespace PurrPurrCoffee.GameStates
             _inputService.SetActionMap(ActionMap.Player);
             Cursor.lockState = CursorLockMode.Locked;
             _logger.Log($"{nameof(MainMenuState)}.{nameof(Enter)}()");
-            _dialogueService.StartDialogue(5); // start dialog
+            if (prevState != GameState.Pause)
+            {
+                _dialogueService.StartDialogue(5); // start dialog
+            }
         }
         public override void Exit(GameState nextState)
         {
@@ -160,7 +163,7 @@ namespace PurrPurrCoffee.GameStates
 
         private async Task SpawnClientAsync()
         {
-            await Task.Delay(5000);
+            await Task.Delay(10000);
             _clientController.SendClient();
         }
     }

@@ -53,7 +53,7 @@ namespace PurrPurrCoffee.Abstractions
 
 #nullable restore
 
-        public GameSettings(QualityLevel qualityLevel = QualityLevel.High, bool showFps = false)
+        public GameSettings(QualityLevel qualityLevel = QualityLevel.High, bool showFps = true)
         {
             _qualityLevel = qualityLevel;
             _showFps = showFps;
