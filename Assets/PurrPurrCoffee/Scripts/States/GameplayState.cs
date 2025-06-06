@@ -41,10 +41,7 @@ namespace PurrPurrCoffee.GameStates
         public override void Enter(GameState prevState)
         {
             base.Enter(prevState);
-            if (prevState != GameState.Pause)
-            {
-                _gameSession.Clear();
-            }
+
             _dialogueProvider.DialogueStarted += OnDialogueStarted;
             _dialogueProvider.DialogueStarting += OnDialogueStarting;
             _dialogueService.ClientServed += OnClientServed;
@@ -52,13 +49,14 @@ namespace PurrPurrCoffee.GameStates
             _dialoguePresenter.NextLineRequested += _dialogueService.NextDialogueLine;
             _dialoguePresenter.SkipRequested += _dialogueService.SkipDialogue;
             _dialoguePresenter.ChoiceMade += _dialogueService.MakeDialogueChoice;
-
             _inputService.Pause += OnPause;
             _inputService.SetActionMap(ActionMap.Player);
-            Cursor.lockState = CursorLockMode.Locked;
             _logger.Log($"{nameof(MainMenuState)}.{nameof(Enter)}()");
+
             if (prevState != GameState.Pause)
             {
+                _gameSession.Clear();
+                _weatherController.Type = WeatherType.Rain;
                 _dialogueService.StartDialogue(5); // start dialog
             }
         }
@@ -73,10 +71,8 @@ namespace PurrPurrCoffee.GameStates
             _dialoguePresenter.NextLineRequested -= _dialogueService.NextDialogueLine;
             _dialoguePresenter.SkipRequested -= _dialogueService.SkipDialogue;
             _dialoguePresenter.ChoiceMade -= _dialogueService.MakeDialogueChoice;
-
             _inputService.Pause -= OnPause;
             _inputService.SetActionMap(ActionMap.UI);
-            Cursor.lockState = CursorLockMode.None;
             _logger.Log($"{nameof(MainMenuState)}.{nameof(Exit)}()");
         }
 
@@ -116,11 +112,7 @@ namespace PurrPurrCoffee.GameStates
             _dialoguePresenter.Disable();
             _inputService.SetActionMap(ActionMap.Player);
             Debug.LogError($"{nameof(OnDialogueEnded)}({id})");
-            if (id == 2)
-            {
-                _weatherController.Type = WeatherType.Rain;
-            }
-            else if (id == 4) // end dialog
+            if (id == 4) // end dialog
             {
                 _gameFlow.EndGame();
             }

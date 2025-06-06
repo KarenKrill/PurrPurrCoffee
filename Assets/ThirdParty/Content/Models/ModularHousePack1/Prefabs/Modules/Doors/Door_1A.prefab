@@ -440,6 +440,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exterior_Doorhandle
       objectReference: {fileID: 0}
+    - target: {fileID: 7253054254767717123, guid: 99504df19992cb14ab3fb85911305df3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -631,6 +635,10 @@ PrefabInstance:
     - target: {fileID: 1815703497981084579, guid: dadddd395936d3d439434bf21d645680, type: 3}
       propertyPath: m_Name
       value: Exterior_Door_Pommel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815703497981084579, guid: dadddd395936d3d439434bf21d645680, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -770,6 +770,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Interior_Door_Pommel
       objectReference: {fileID: 0}
+    - target: {fileID: 1444540159997871375, guid: 0d2eb644e66ba054c94ace55f6a4fa8e, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6326279174329956964, guid: 0d2eb644e66ba054c94ace55f6a4fa8e, type: 3}
       propertyPath: m_RootOrder
       value: 0
