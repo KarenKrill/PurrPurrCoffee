@@ -41,6 +41,8 @@ public class WeatherController : MonoBehaviour, IWeatherController
     private GameObject _lightningStrikeLight;
     [SerializeField]
     private GameObject _creepyMan;
+    [SerializeField]
+    private GameObject _rainParticleSystem;
 
     private WeatherType _currentWeatherType = WeatherType.Dry;
     private AudioSource _mainAudioSource;
@@ -55,6 +57,10 @@ public class WeatherController : MonoBehaviour, IWeatherController
         {
             _mainAudioSource.Stop();
         }
+        if (_rainParticleSystem != null)
+        {
+            _rainParticleSystem.SetActive(false);
+        }
         switch (_currentWeatherType)
         {
             case WeatherType.Dry:
@@ -68,6 +74,10 @@ public class WeatherController : MonoBehaviour, IWeatherController
             case WeatherType.Rain:
                 Debug.LogError($"Rain weather type");
                 _mainAudioSource.clip = _rainAudioClip;
+                if (_rainParticleSystem != null)
+                {
+                    _rainParticleSystem.SetActive(true);
+                }
                 _mainAudioSource.Play();
                 break;
             default:
