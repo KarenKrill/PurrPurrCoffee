@@ -7,13 +7,15 @@ A mix of horror and bartender simulator, and also a lot of cats
 
 ### Plot
 ###### MVP:
-- [x] Intro
-- [x] Outro
+- [x] Intro (text)
+- [x] Outro (text)
 - [x] Screamer at the end of the dialogues (a thunderstorm with a scary guy outside the window)
 - [x] End of the working day (games)
 ##### Features:
 - [x] ClientDialogs
-- [ ] CutScenes
+- [ ] Intro CutScene
+- [ ] Outro CutScene
+- [ ] Screamer CutScene
 
 ---
 ### Gameplay
@@ -30,7 +32,7 @@ A mix of horror and bartender simulator, and also a lot of cats
 ###### MVP:
 - [x] Cozy warm atmosphere
 - [x] Threat and darkness outside
-- [ ] VHS filter with stripes
+- [x] VHS filter with stripes
 ##### Features
 - [ ] Сats that you can pet
 - [x] Paintings
