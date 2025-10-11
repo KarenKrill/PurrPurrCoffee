@@ -4,7 +4,6 @@ using Zenject;
 namespace KarenKrill.InteractionSystem
 {
     using Abstractions;
-    using NUnit.Framework;
 
     public abstract class InteractionTargetBase : MonoBehaviour, IInteractionTarget
     {

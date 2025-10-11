@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
+
+using Zenject;
 
 namespace KarenKrill.InteractionSystem
 {
     using Abstractions;
-    using Zenject;
 
     public abstract class RaycastInteractionDetectorBase : MonoBehaviour
     {
