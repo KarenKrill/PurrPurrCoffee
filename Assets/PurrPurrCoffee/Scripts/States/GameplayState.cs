@@ -1,17 +1,19 @@
-﻿using KarenKrill.StateSystem.Abstractions;
-using KarenKrill.Storytelling.Abstractions;
+﻿using System.Threading.Tasks;
+
 using UnityEngine;
+
+using KarenKrill.Input.Abstractions;
+using KarenKrill.StateSystem.Abstractions;
+using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UI.Presenters.Abstractions;
 
 namespace PurrPurrCoffee.GameStates
 {
     using Abstractions;
     using Input.Abstractions;
-    using KarenKrill.UI.Presenters.Abstractions;
-    using PurrPurrCoffee.UI.Views.Abstractions;
-    using States;
-    using System.Collections;
-    using System.Threading.Tasks;
+    using UI.Views.Abstractions;
     using UI.Presenters.Abstractions;
+    using States;
 
     public class GameplayState : PresentableStateHandlerBase<GameState>, IStateHandler<GameState>
     {

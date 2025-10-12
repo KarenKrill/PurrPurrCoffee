@@ -4,7 +4,7 @@ using KarenKrill.Utilities;
 
 namespace KarenKrill.Movement
 {
-    public class OrdinaryMoveBehaviour : MonoBehaviour
+    public class CharacterMoveBehaviour : MonoBehaviour
     {
         public float MaximumSpeed { get => _maximumSpeed; set => _maximumSpeed = value; }
         /// <summary>Range: [0..1]</summary>
@@ -21,8 +21,20 @@ namespace KarenKrill.Movement
         public Vector3 MoveDirection { get => _moveDirection; set => _moveDirection = value; }
         public Vector2 LookDirection { get => _lookDirection; set => _lookDirection = value; }
 
+        public void PulseUp(float distance, float gracePeriod, float inAirHorizontalSpeed)
+        {
+            _pulseUpDistance = distance;
+            _pulseUpStartTime = Time.time;
+            _pulseUpGracePeriod = gracePeriod;
+            _inAirHorizontalSpeed = inAirHorizontalSpeed;
+        }
+
         protected virtual void Awake()
         {
+            if (_cameraTransform == null)
+            {
+                _cameraTransform = Camera.main.transform;
+            }
             _characterControllerStepOffset = _characterController.stepOffset;
             _characterController.enabled = false;
         }
@@ -53,6 +65,8 @@ namespace KarenKrill.Movement
 
         [SerializeField]
         private CharacterController _characterController;
+        [SerializeField]
+        private Transform _cameraTransform;
         [SerializeField]
         private Animator _animator = null;
         [SerializeField]
@@ -155,8 +169,8 @@ namespace KarenKrill.Movement
             }
 
             // Direction & DirectionInputMagnitude usings
-            var cameraRelativeQuaternion = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up);
-            var direction = cameraRelativeQuaternion * _moveDirection;// new Vector3(_moveDirection.x, _moveDirection.y, _moveDirection.z);
+            var cameraRelativeQuaternion = Quaternion.AngleAxis(_cameraTransform.rotation.eulerAngles.y, Vector3.up);
+            var direction = cameraRelativeQuaternion * _moveDirection;
             if (direction.magnitude > 1)
             {
                 direction.Normalize();
@@ -211,13 +225,6 @@ namespace KarenKrill.Movement
                 _animator.SetBool("IsMoving", isMoving);
                 _animator.SetBool("IsLooking", isLooking);
             }
-        }
-        public void PulseUp(float distance, float gracePeriod, float inAirHorizontalSpeed)
-        {
-            _pulseUpDistance = distance;
-            _pulseUpStartTime = Time.time;
-            _pulseUpGracePeriod = gracePeriod;
-            _inAirHorizontalSpeed = inAirHorizontalSpeed;
         }
     }
 }

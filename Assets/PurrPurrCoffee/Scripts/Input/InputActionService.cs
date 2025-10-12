@@ -1,6 +1,9 @@
 ﻿using System;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+using KarenKrill.Input.Abstractions;
 
 namespace PurrPurrCoffee.Input
 {

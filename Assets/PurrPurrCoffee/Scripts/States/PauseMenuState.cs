@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using KarenKrill.Input.Abstractions;
 using KarenKrill.StateSystem.Abstractions;
 
 namespace PurrPurrCoffee.GameStates

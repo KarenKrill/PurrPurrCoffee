@@ -1,33 +1,31 @@
 using UnityEngine;
+
 using Zenject;
 
-using KarenKrill.InteractionSystem;
-using KarenKrill.InteractionSystem.Abstractions;
+using KarenKrill.Input.Abstractions;
 
-namespace PurrPurrCoffee.Interactions
+namespace KarenKrill.InteractionSystem
 {
-    using Input.Abstractions;
-
     public class RaycastInteractionDetector : RaycastInteractionDetectorBase
     {
         [Inject]
-        public void Initialize(IInputActionService inputActionsService)
+        public void Initialize(IBasicPlayerActionsProvider playerActionsProvider)
         {
-            _inputActionsService = inputActionsService;
+            _playerActionsProvider = playerActionsProvider;
         }
 
         protected override void InputSubscribe()
         {
-            _inputActionsService.Look += OnLook;
-            _inputActionsService.Interact += OnInteract;
+            _playerActionsProvider.Look += OnLook;
+            _playerActionsProvider.Interact += OnInteract;
         }
         protected override void InputUnsubscribe()
         {
-            _inputActionsService.Look -= OnLook;
-            _inputActionsService.Interact -= OnInteract;
+            _playerActionsProvider.Look -= OnLook;
+            _playerActionsProvider.Interact -= OnInteract;
         }
 
-        private IInputActionService _inputActionsService;
+        private IBasicPlayerActionsProvider _playerActionsProvider;
 
         private void OnLook(Vector2 lookDelta)
         {

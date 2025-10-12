@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+
+using KarenKrill.Input.Abstractions;
 using KarenKrill.StateSystem.Abstractions;
 
 namespace PurrPurrCoffee.GameStates
 {
-    using PurrPurrCoffee.Abstractions;
-    using PurrPurrCoffee.Input.Abstractions;
-    using PurrPurrCoffee.States;
-    using PurrPurrCoffee.UI.Presenters.Abstractions;
+    using Abstractions;
+    using Input.Abstractions;
+    using States;
+    using UI.Presenters.Abstractions;
 
     public class WinMenuState : PresentableStateHandlerBase<GameState>, IStateHandler<GameState>
     {

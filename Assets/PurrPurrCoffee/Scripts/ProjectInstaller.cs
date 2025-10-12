@@ -16,7 +16,6 @@ using KarenKrill.InteractionSystem;
 namespace PurrPurrCoffee
 {
     using Abstractions;
-    using Input.Abstractions;
     using Input;
     using UnityEngine.UI;
     using Storytelling;
@@ -29,8 +28,8 @@ namespace PurrPurrCoffee
             Container.BindInterfacesAndSelfTo<ClientController>().FromComponentInHierarchy(false).AsSingle();
             Container.BindInterfacesAndSelfTo<WeatherController>().FromComponentInHierarchy(false).AsSingle();
             InstallSettings();
-            Container.Bind<IInputActionService>().To<InputActionService>().FromNew().AsSingle();
-#if DEBUG
+            Container.BindInterfacesAndSelfTo<InputActionService>().FromNew().AsSingle();
+            #if DEBUG
             Container.Bind<ILogger>().To<Logger>().FromNew().AsSingle().WithArguments(new DebugLogHandler());
 #else
             Container.Bind<ILogger>().To<StubLogger>().FromNew().AsSingle();
