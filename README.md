@@ -21,7 +21,16 @@ A mix of horror and bartender simulator, and also a lot of cats
 ### Gameplay
 ###### MVP:
 - [x] CoffeeMaking
-- [x] Interactions with environment
+- [ ] Interactions with environment
+	- [x] Interaction system
+	- [ ] Interaction kinds
+		- [x] NPC (dialogue)
+		- [x] Coffee machine
+		- [x] Coffee cup
+		- [ ] Coffee cup lid
+		- [ ] Tables and chairs cleaning
+		- [ ] Item drop
+- [ ] Chase (with death penalty in case of loss)
 - [x] Money and reputation
 ##### Features:
 - [x] Clients Dialogs
@@ -33,6 +42,8 @@ A mix of horror and bartender simulator, and also a lot of cats
 - [x] Cozy warm atmosphere
 - [x] Threat and darkness outside
 - [x] VHS filter with stripes
+- [ ] Professionally placed lighting
+- [ ] Ambient music and sound
 ##### Features
 - [ ] Сats that you can pet
 - [x] Paintings
@@ -65,6 +76,12 @@ A mix of horror and bartender simulator, and also a lot of cats
 - [ ] ProBuilder for walls/floors (perfomance, visual)
 - [x] Lighting
 - [x] Music/sounds
+
+---
+### Issues
+- [ ] Cursor aiming
+- [ ] Coffee shop interior
+- [ ] FPS drops during which the screen twitches violently when moving the mouse
 
 ---
 ### ETC
