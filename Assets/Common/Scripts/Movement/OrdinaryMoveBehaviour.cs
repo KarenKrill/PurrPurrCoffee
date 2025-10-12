@@ -21,6 +21,36 @@ namespace KarenKrill.Movement
         public Vector3 MoveDirection { get => _moveDirection; set => _moveDirection = value; }
         public Vector2 LookDirection { get => _lookDirection; set => _lookDirection = value; }
 
+        protected virtual void Awake()
+        {
+            _characterControllerStepOffset = _characterController.stepOffset;
+            _characterController.enabled = false;
+        }
+        protected virtual void OnEnable()
+        {
+            _characterController.enabled = true;
+        }
+        protected virtual void OnDisable()
+        {
+            if (!_characterController.IsNullOrDestroyed())
+            {
+                _characterController.enabled = false;
+            }
+        }
+        protected virtual void Update()
+        {
+            UpdateMovement();
+        }
+        protected virtual void OnAnimatorMove()
+        {
+            if (_useRootMotion && _animator != null && _isGrounded && !_isSliding)
+            {
+                Vector3 velocity = _animator.deltaPosition;
+                velocity.y = _fallSpeed * Time.deltaTime;
+                _characterController.Move(velocity);
+            }
+        }
+
         [SerializeField]
         private CharacterController _characterController;
         [SerializeField]
@@ -53,36 +83,6 @@ namespace KarenKrill.Movement
         private Vector3 _slopeSlideVelocity;
         private float _characterControllerStepOffset;
         private float? _lastGroundedTime, _pulseUpStartTime;
-
-        protected virtual void Awake()
-        {
-            _characterControllerStepOffset = _characterController.stepOffset;
-            _characterController.enabled = false;
-        }
-        protected virtual void OnEnable()
-        {
-            _characterController.enabled = true;
-        }
-        protected virtual void OnDisable()
-        {
-            if (!_characterController.IsNullOrDestroyed())
-            {
-                _characterController.enabled = false;
-            }
-        }
-        protected virtual void Update()
-        {
-            UpdateMovement();
-        }
-        private void OnAnimatorMove()
-        {
-            if (_useRootMotion && _animator != null && _isGrounded && !_isSliding)
-            {
-                Vector3 velocity = _animator.deltaPosition;
-                velocity.y = _fallSpeed * Time.deltaTime;
-                _characterController.Move(velocity);
-            }
-        }
 
         private void UpdateSlopeSlideVelocity()
         {
@@ -190,12 +190,15 @@ namespace KarenKrill.Movement
             {
                 if (_thirdPerson)
                 {
-                    Quaternion rotationQuaternion = Quaternion.LookRotation(direction, Vector3.up);
-                    _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, rotationQuaternion, _rotationDegreeSpeed * Time.deltaTime);
+                    var directionLookRotation = Quaternion.LookRotation(direction, Vector3.up);
+                    var characterRotation = _characterController.transform.rotation;
+                    var rotation = Quaternion.RotateTowards(characterRotation, directionLookRotation, _rotationDegreeSpeed * Time.deltaTime);
+                    _characterController.transform.rotation = rotation;
                 }
                 else
                 {
-                    _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, cameraRelativeQuaternion, 360);
+                    var rotation = Quaternion.RotateTowards(_characterController.transform.rotation, cameraRelativeQuaternion, 360);
+                    _characterController.transform.rotation = rotation;
                 }
             }
 
