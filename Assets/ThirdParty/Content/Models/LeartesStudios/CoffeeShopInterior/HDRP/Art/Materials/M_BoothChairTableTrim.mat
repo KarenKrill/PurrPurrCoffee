@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 11ff6dd6140766d4dbf839509ebeab4c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4
@@ -206,7 +207,7 @@ Material:
     - Vector1_AF65C65C: 0
     - Vector1_BDF4927C: 1
     - Vector1_D39B6A9D: 1
-    - Vector1_ED619312: 0.5
+    - Vector1_ED619312: 0.33
     - Vector1_df308df77fb1465d88917f755a5df14a: 1
     - Vector1_e44edfc2f5b444f890d1ea79d66e4764: 1
     - Vector1_eb681cc57c3e46829a9e2c40614de15c: 1
@@ -299,7 +300,7 @@ Material:
     - _QueueControl: 1
     - _QueueOffset: 0
     - _RayTracing: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0

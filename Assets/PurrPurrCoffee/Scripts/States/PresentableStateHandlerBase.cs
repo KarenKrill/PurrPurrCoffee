@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Linq;
 
 using KarenKrill.StateSystem.Abstractions;
@@ -14,7 +16,7 @@ namespace PurrPurrCoffee.States
         {
             _presenters = presenters.ToArray();
         }
-        public virtual void Enter(T prevState)
+        public virtual void Enter(T prevState, object? context = null)
         {
             foreach (var presenter in _presenters)
             {

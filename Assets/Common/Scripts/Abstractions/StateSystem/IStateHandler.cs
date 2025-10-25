@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 
 namespace KarenKrill.StateSystem.Abstractions
 {
@@ -9,7 +11,7 @@ namespace KarenKrill.StateSystem.Abstractions
         /// </summary>
         public T State { get; }
 
-        void Enter(T prevState);
+        void Enter(T prevState, object? context);
         void Exit(T nextState);
     }
 }

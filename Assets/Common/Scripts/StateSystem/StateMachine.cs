@@ -12,12 +12,12 @@ namespace KarenKrill.StateSystem
         public T State => _switchableStateMachine.State;
         public IStateSwitcher<T> StateSwitcher => _switchableStateMachine.StateSwitcher;
 
-        public event StateTransitionDelegate<T>? StateEnter
+        public event StateEnterDelegate<T>? StateEnter
         {
             add => _switchableStateMachine.StateEnter += value;
             remove => _switchableStateMachine.StateEnter -= value;
         }
-        public event StateTransitionDelegate<T>? StateExit
+        public event StateExitDelegate<T>? StateExit
         {
             add => _switchableStateMachine.StateExit += value;
             remove => _switchableStateMachine.StateExit -= value;
@@ -35,8 +35,8 @@ namespace KarenKrill.StateSystem
             public T State => _state;
             public IStateSwitcher<T> StateSwitcher => this;
 
-            public event StateTransitionDelegate<T>? StateEnter;
-            public event StateTransitionDelegate<T>? StateExit;
+            public event StateEnterDelegate<T>? StateEnter;
+            public event StateExitDelegate<T>? StateExit;
 
             public SwitchableStateMachine(IStateGraph<T> stateGraph)
             {
@@ -45,7 +45,7 @@ namespace KarenKrill.StateSystem
             }
             public IEnumerable<T> ValidStateTransitions(T state) => _stateGraph.Transitions[state];
             public bool IsCanTransitTo(T state) => _stateGraph.Transitions[_state].Contains(state);
-            public void TransitTo(T state)
+            public void TransitTo(T state, object? context = null)
             {
                 if (IsCanTransitTo(state))
                 {
@@ -57,7 +57,7 @@ namespace KarenKrill.StateSystem
                     {
                         var fromState = _state;
                         _state = state;
-                        StateEnter?.Invoke(fromState, _state);
+                        StateEnter?.Invoke(fromState, _state, context);
                     }
                 }
                 else
@@ -65,7 +65,7 @@ namespace KarenKrill.StateSystem
                     throw new InvalidStateMachineTransitionException<T>(_state, state);
                 }
             }
-            public bool TryTransitTo(T state)
+            public bool TryTransitTo(T state, object? context = null)
             {
                 if (IsCanTransitTo(state))
                 {
@@ -77,7 +77,7 @@ namespace KarenKrill.StateSystem
                     {
                         var fromState = _state;
                         _state = state;
-                        StateEnter?.Invoke(fromState, _state);
+                        StateEnter?.Invoke(fromState, _state, context);
                     }
                     return true;
                 }
@@ -91,7 +91,7 @@ namespace KarenKrill.StateSystem
                 }
                 var fromState = _state;
                 _state = _stateGraph.InitialState;
-                StateEnter?.Invoke(fromState, _state);
+                StateEnter?.Invoke(fromState, _state, null);
             }
 
             private T _state;

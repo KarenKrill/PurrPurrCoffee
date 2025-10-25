@@ -10,8 +10,10 @@ namespace PurrPurrCoffee.UI.Presenters.Abstractions
 
     public interface IDialoguePresenter : IPresenter<IDialogueView>
     {
+        public bool ShowInteractionTooltip { set; }
+
         public event Action<int>? ChoiceMade;
-        public event Action? NextLineRequested;
-        public event Action? SkipRequested;
+        public event Action? Continued;
+        public event Action? Skipped;
     }
 }

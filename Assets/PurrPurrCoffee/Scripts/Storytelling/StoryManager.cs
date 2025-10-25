@@ -14,7 +14,7 @@ namespace PurrPurrCoffee.Storytelling
         {
             _dialogueService = dialogueService;
         }
-        public void StartDialogue(int id)
+        public void StartDialogue(string id)
         {
             _dialogueService.StartDialogue(id);
         }

@@ -6,7 +6,7 @@ namespace PurrPurrCoffee.Interactions
 {
     public class DoorHandleInteraction : OutlineInteractableBase, IInteractable
     {
-        protected override void OnInteraction()
+        protected override bool OnInteraction(IInteractor interactor)
         {
             if (_doorOpener.IsOpen)
             {
@@ -16,6 +16,7 @@ namespace PurrPurrCoffee.Interactions
             {
                 _doorOpener.Open();
             }
+            return true;
         }
 
         [SerializeField]

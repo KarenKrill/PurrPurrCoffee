@@ -25,6 +25,7 @@ namespace PurrPurrCoffee.UI.Views.Abstractions
         public bool NextLineAvailable { set; }
         public bool SkipAvailable { set; }
         public DialogueMode Mode { set; }
+        public bool ShowInteractionTooltip { set; }
 
         public event Action<int>? ChoiceMade;
         public event Action? NextLineRequested;

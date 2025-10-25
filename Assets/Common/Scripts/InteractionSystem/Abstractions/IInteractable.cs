@@ -9,7 +9,10 @@ namespace KarenKrill.InteractionSystem.Abstractions
         event Action<IInteractor>? Interaction;
         event Action<IInteractor, bool>? InteractionAvailabilityChanged;
 
-        void Interact(IInteractor interactor);
+        /// <summary></summary>
+        /// <param name="interactor"></param>
+        /// <returns><see langword="true"/> if interaction allowed, <see langword="false"/> otherwise</returns>
+        bool Interact(IInteractor interactor);
         void SetInteractionAvailability(IInteractor interactor, bool available = true);
     }
 }

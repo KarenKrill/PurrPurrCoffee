@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfe04d8f99e3e1428e9505e4eae33c7, type: 3}
+  m_Name: CutSceneInfoRepository
+  m_EditorClassIdentifier: 
+  _cutScenesInfo:
+    _serializedList:
+    - Key: WakeUpIntro
+      Value:
+        <PlayableAsset>k__BackingField: {fileID: 11400000, guid: 3004b107c49aaf246a8f09c5c50cc11e, type: 2}
+        <BackgroundMusic>k__BackingField: {fileID: 0}
+        <DialogueId>k__BackingField: player_shift_1_intro
+        <ActionsInfo>k__BackingField:
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: fb2e0ca62af86ec4fbde403adf8cda43, type: 2}
+          <IsDialogueAction>k__BackingField: 0
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: a78f9732e4952dd40a27e688d05f1ee5, type: 2}
+          <IsDialogueAction>k__BackingField: 1
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: 3e7536234d4711d4db64762d35eccb01, type: 2}
+          <IsDialogueAction>k__BackingField: 1
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: e68c7df30eec2064890687b01ba5f652, type: 2}
+          <IsDialogueAction>k__BackingField: 1
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: b5a9168605720d34b88c222874bbedc6, type: 2}
+          <IsDialogueAction>k__BackingField: 1
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}
+        - <SignalTrigger>k__BackingField: {fileID: 11400000, guid: bf18976fc39660d4d91510eef8ff5f5d, type: 2}
+          <IsDialogueAction>k__BackingField: 1
+          <VoiceTrack>k__BackingField: {fileID: 0}
+          <BackgroundMusicOverride>k__BackingField: {fileID: 0}

@@ -29,35 +29,35 @@ namespace KarenKrill.InteractionSystem
         protected void OnLookChanged(IInteractor interactor, Ray ray)
         {
             var hitsCount = Physics.RaycastNonAlloc(ray, _cachedRaycastHits, _detectDistance, InteractableLayer);
+            IInteractionTarget nearestTarget = null;
+            float minDistance = float.MaxValue;
             for (int i = 0; i < hitsCount; i++)
             {
-                if (_cachedRaycastHits[i].collider.TryGetComponent<IInteractionTarget>(out var interactionTarget))
+                if (minDistance > _cachedRaycastHits[i].distance && _cachedRaycastHits[i].collider.TryGetComponent<IInteractionTarget>(out var interactionTarget))
                 {
                     if (_interactionTargetRegistry.Contains(interactionTarget))
                     {
-                        OnTargetFocused(interactionTarget, interactor);
-                        return;
+                        nearestTarget = interactionTarget;
+                        minDistance = _cachedRaycastHits[i].distance;
                     }
                 }
             }
-            /*if (Physics.Raycast(ray, out var hitInfo, _detectDistance, InteractableLayer))
+            if (nearestTarget != null)
             {
-                if (hitInfo.collider.TryGetComponent<IInteractionTarget>(out var interactionTarget))
-                {
-                    if (_interactionTargetRegistry.Contains(interactionTarget))
-                    {
-                        OnTargetFocused(interactionTarget, interactor);
-                        return;
-                    }
-                }
-            }*/
-            OnTargetLostFocus();
-
+                OnTargetFocused(nearestTarget, interactor);
+            }
+            else
+            {
+                OnTargetLostFocus();
+            }
         }
         protected void OnInteract(IInteractor interactor)
         {
-            _lastAvailableInteractionTarget?.Interactable.Interact(interactor);
-            interactor?.Interact(_lastAvailableInteractionTarget?.Interactable);
+            bool isInteractionAllowed = _lastAvailableInteractionTarget?.Interactable.Interact(interactor) ?? true;
+            if (isInteractionAllowed)
+            {
+                interactor?.Interact(_lastAvailableInteractionTarget?.Interactable);
+            }
         }
 
         [SerializeField]

@@ -21,6 +21,7 @@ namespace PurrPurrCoffee.UI.Views
         public bool NextLineAvailable { set => _nextLineButton.enabled = value; }
         public bool SkipAvailable { set => _skipButton.enabled = value; }
         public DialogueMode Mode { set => SetMode(value); }
+        public bool ShowInteractionTooltip { set => _interactionTooltipText.enabled = value; }
 
 #nullable enable
         public event Action<int>? ChoiceMade;
@@ -50,6 +51,8 @@ namespace PurrPurrCoffee.UI.Views
         private GameObject _choicesContainer;
         [SerializeField]
         private Transform _choiceButtonsParent;
+        [SerializeField]
+        private TextMeshProUGUI _interactionTooltipText;
 
         private ComponentPool<Button> _buttonsPool;
         private readonly List<Button> _currentChoiceButtons = new();

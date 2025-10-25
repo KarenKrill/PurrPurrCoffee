@@ -11,24 +11,24 @@ namespace PurrPurrCoffee.UI.Presenters
     {
         public GameSessionStatusPresenter(IViewFactory viewFactory,
             IPresenterNavigator navigator,
-            GameSession gameSession) : base(viewFactory, navigator)
+            GameProfileSession gameSession) : base(viewFactory, navigator)
         {
             _gameSession = gameSession;
         }
         protected override void Subscribe()
         {
-            OnCoffeeRevenueChanged(_gameSession.CoffeeRrevenue);
-            OnCoffeeReputationChanged(_gameSession.CoffeeReputation);
-            _gameSession.CoffeeRevenueChanged += OnCoffeeRevenueChanged;
-            _gameSession.CoffeeReputationChanged += OnCoffeeReputationChanged;
+            OnCoffeeRevenueChanged(_gameSession.Revenue);
+            OnCoffeeReputationChanged(_gameSession.Reputation);
+            _gameSession.RevenueChanged += OnCoffeeRevenueChanged;
+            _gameSession.ReputationChanged += OnCoffeeReputationChanged;
         }
         protected override void Unsubscribe()
         {
-            _gameSession.CoffeeRevenueChanged -= OnCoffeeRevenueChanged;
-            _gameSession.CoffeeReputationChanged -= OnCoffeeReputationChanged;
+            _gameSession.RevenueChanged -= OnCoffeeRevenueChanged;
+            _gameSession.ReputationChanged -= OnCoffeeReputationChanged;
         }
 
-        private readonly GameSession _gameSession;
+        private readonly GameProfileSession _gameSession;
         private void OnCoffeeReputationChanged(float reputation)
         {
             View.Reputation = $"Репутация: {reputation:0.0}";// ✫";

@@ -12,10 +12,14 @@ namespace KarenKrill.InteractionSystem
         public event Action<IInteractor>? Interaction;
         public event Action<IInteractor, bool>? InteractionAvailabilityChanged;
 
-        public void Interact(IInteractor interactor)
+        public bool Interact(IInteractor interactor)
         {
-            OnInteraction();
-            Interaction?.Invoke(interactor);
+            var isInteractionAllowed = OnInteraction(interactor);
+            if (isInteractionAllowed)
+            {
+                Interaction?.Invoke(interactor);
+            }
+            return isInteractionAllowed;
         }
         public void SetInteractionAvailability(IInteractor interactor, bool available = true)
         {
@@ -23,7 +27,7 @@ namespace KarenKrill.InteractionSystem
             InteractionAvailabilityChanged?.Invoke(interactor, available);
         }
 
-        protected abstract void OnInteraction();
+        protected abstract bool OnInteraction(IInteractor interactor);
         protected abstract void OnInteractionAvailabilityChanged(bool available);
     }
 }

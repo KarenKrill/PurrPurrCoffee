@@ -6,11 +6,11 @@ namespace KarenKrill.Storytelling.Abstractions
 {
     public interface IDialogueProvider
     {
-        DialogueState CurrentDialogueState { get; }
+        DialogueState DialogueState { get; }
 
         event Action<DialogueState>? DialogueStateChanged;
-        event Action<int>? DialogueStarting;
-        event Action<int>? DialogueStarted;
-        event Action<int>? DialogueEnded;
+        event Action<string>? DialogueStarting;
+        event Action<string>? DialogueStarted;
+        event Action<string>? DialogueEnded;
     }
 }

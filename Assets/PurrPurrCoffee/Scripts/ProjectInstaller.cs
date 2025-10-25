@@ -24,7 +24,10 @@ namespace PurrPurrCoffee
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<GameSession>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameProfileSession>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<CutSceneControllerRegistry>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerInfoProviderRegistry>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<CutSceneInfoRepository>().FromInstance(_cutSceneInfoRepository).AsSingle();
             Container.BindInterfacesAndSelfTo<ClientController>().FromComponentInHierarchy(false).AsSingle();
             Container.BindInterfacesAndSelfTo<WeatherController>().FromComponentInHierarchy(false).AsSingle();
             InstallSettings();
@@ -34,6 +37,7 @@ namespace PurrPurrCoffee
 #else
             Container.Bind<ILogger>().To<StubLogger>().FromNew().AsSingle();
 #endif
+            Container.BindInterfacesAndSelfTo<AudioController>().FromInstance(_audioController).AsSingle();
             Container.BindInterfacesAndSelfTo<DialogueService>().AsSingle().WithArguments(_storyInkJson.text);
             Container.BindInterfacesAndSelfTo<GameFlow>().AsSingle();
             InstallGameStateMachine();
@@ -44,13 +48,18 @@ namespace PurrPurrCoffee
         }
 
         [SerializeField]
-        Canvas _uiRootCanvas;
+        private Canvas _uiRootCanvas;
         [SerializeField]
-        List<GameObject> _uiPrefabs;
+        private List<GameObject> _uiPrefabs;
         [SerializeField]
-        DiagnosticsProvider _diagnosticsProvider;
+        private DiagnosticsProvider _diagnosticsProvider;
         [SerializeField]
-        TextAsset _storyInkJson;
+        private TextAsset _storyInkJson;
+        [SerializeField]
+        private CutSceneInfoRepository _cutSceneInfoRepository;
+        [SerializeField]
+        private AudioController _audioController;
+
         private void InstallSettings()
         {
             var qualityLevel = PlayerPrefs.GetInt("Settings.Graphics.QualityLevel", (int)QualityLevel.High);

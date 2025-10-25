@@ -39,6 +39,7 @@ namespace PurrPurrCoffee.Input
 
         public event LookDelegate? Look;
         public event Action? LookCancel;
+        public event Action? MoveStarted;
         public event MoveDelegate? Move;
         public event Action? MoveCancel;
         public event Action? Sprint;
@@ -134,7 +135,11 @@ namespace PurrPurrCoffee.Input
         }
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.started)
+            {
+                MoveStarted?.Invoke();
+            }
+            else if (context.performed)
             {
                 var moveDelta = context.ReadValue<Vector2>();
                 LastMoveDelta = moveDelta;

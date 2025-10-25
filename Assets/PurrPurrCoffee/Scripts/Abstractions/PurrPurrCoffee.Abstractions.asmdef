@@ -2,7 +2,11 @@
     "name": "PurrPurrCoffee.Abstractions",
     "rootNamespace": "PurrPurrCoffee.Abstractions",
     "references": [
-        "GUID:a00509254bb803a4d89b998f2d85ff80"
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:a00509254bb803a4d89b998f2d85ff80",
+        "GUID:70b64406575c68f4385cf2b9d0e16eff",
+        "GUID:758fdfc8aacc7bd4a9e1195061e594c2"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

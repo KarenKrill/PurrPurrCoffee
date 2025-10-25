@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 
 namespace KarenKrill.StateSystem.Abstractions
@@ -10,8 +12,8 @@ namespace KarenKrill.StateSystem.Abstractions
         IEnumerable<T> ValidStateTransitions(T state);
         bool IsCanTransitTo(T state);
         /// <exception cref="InvalidStateMachineTransitionException"></exception>
-        void TransitTo(T state);
-        bool TryTransitTo(T state);
+        void TransitTo(T state, object? context = null);
+        bool TryTransitTo(T state, object? context = null);
         void TransitToInitial();
     }
 }

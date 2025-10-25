@@ -5,15 +5,16 @@
         GameState State { get; }
 
         void LoadMainMenu();
-        void LoadLevel(long index);
-        void RestartGame();
-        void PlayLevel();
-        void PauseLevel();
-        void FinishLevel();
         void StartGame();
+        void RestartGame();
         void EndGame();
         void WinGame();
         void LoseGame();
         void Exit();
+        void LoadLevel(long index);
+        void PlayLevel();
+        void PauseLevel();
+        void FinishLevel();
+        void PlayCutscene(string id);
     }
 }

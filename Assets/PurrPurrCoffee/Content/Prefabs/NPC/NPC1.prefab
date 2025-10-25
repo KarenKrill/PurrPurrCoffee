@@ -488,7 +488,7 @@ MonoBehaviour:
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
-  precomputeOutline: 0
+  precomputeOutline: 1
   bakeKeys: []
   bakeValues: []
 --- !u!114 &6795920381128746988
@@ -509,7 +509,7 @@ MonoBehaviour:
   DialogEnded:
     m_PersistentCalls:
       m_Calls: []
-  _dialogueId: 1
+  _dialogueIdStr: client_maria
 --- !u!136 &3645236455576657498
 CapsuleCollider:
   m_ObjectHideFlags: 0

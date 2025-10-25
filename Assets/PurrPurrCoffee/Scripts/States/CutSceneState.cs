@@ -1,139 +1,186 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿#nullable enable
 
 using KarenKrill.StateSystem.Abstractions;
-using KarenKrill.Storytelling.Abstractions;
+using UnityEngine;
 
 namespace PurrPurrCoffee.GameStates
 {
     using Abstractions;
+    using Cysharp.Threading.Tasks;
     using Input.Abstractions;
-    using UI.Presenters.Abstractions;
-    using States;
+    using KarenKrill.Input.Abstractions;
+    using KarenKrill.Storytelling.Abstractions;
     using KarenKrill.UI.Presenters.Abstractions;
+    using PurrPurrCoffee.UI.Presenters.Abstractions;
     using PurrPurrCoffee.UI.Views.Abstractions;
+    using States;
+    using System.Linq;
+    using UnityEngine.Playables;
+    using UnityEngine.Timeline;
 
-    /*public class CutSceneState : PresentableStateHandlerBase<GameState>, IStateHandler<GameState>
+    public class CutSceneState : PresentableStateHandlerBase<GameState>, IStateHandler<GameState>
     {
         public override GameState State => GameState.CutScene;
 
         public CutSceneState(ILogger logger,
             IGameFlow gameFlow,
+            IStateSwitcher<GameState> stateSwitcher,
             IInputActionService inputService,
+            IPresenter<IGameSessionStatusView> gameSessionStatusPresenter,
             IDialoguePresenter dialoguePresenter,
             IDialogueProvider dialogueProvider,
             IDialogueService dialogueService,
-            IClientController clientController,
-            GameSession gameSession,
-            IPresenter<IGameSessionStatusView> gameSessionStatusPresenter) : base(gameSessionStatusPresenter)
+            ICutSceneInfoProvider cutSceneInfoProvider,
+            ICutSceneControllerRegistry cutSceneControllerRegistry)
+            : base(gameSessionStatusPresenter)
         {
             _logger = logger;
             _gameFlow = gameFlow;
+            _stateSwitcher = stateSwitcher;
             _inputService = inputService;
             _dialoguePresenter = dialoguePresenter;
             _dialogueProvider = dialogueProvider;
             _dialogueService = dialogueService;
-            _clientController = clientController;
-            _gameSession = gameSession;
+            _cutSceneInfoProvider = cutSceneInfoProvider;
+            _cutSceneControllerRegistry = cutSceneControllerRegistry;
         }
-        public override void Enter(GameState prevState)
+        public override void Enter(GameState prevState, object? context)
         {
             base.Enter(prevState);
+            _inputService.Cancel += OnPause;
+            _inputService.SetActionMap(ActionMap.UI);
+            _dialogueProvider.DialogueStarted += OnDialogueStarted;
+            _dialogueProvider.DialogueEnded += OnDialogueEnded;
+            _cutSceneControllerRegistry.ControllerRegistered += OnCutSceneControllerRegistered;
+            _cutSceneController = _cutSceneControllerRegistry.Controllers.FirstOrDefault();
             if (prevState != GameState.Pause)
             {
-                _gameSession.Clear();
+                _previousGameState = prevState;
+                _isDialogueStarted = false;
+                if (context is CutSceneStateContext ctx)
+                {
+                    if (_cutSceneInfoProvider.CutScenesInfo.TryGetValue(ctx.Id, out _currentCutSceneInfo))
+                    {
+                        UniTask.RunOnThreadPool(async () =>
+                        {
+                            while (_cutSceneController is null)
+                            {
+                                await UniTask.Yield();
+                            }
+                            _isFirstDialogueAction = true;
+                            _cutSceneController.EventSignaled += OnCutSceneEventSignaled;
+                            _cutSceneController.CutSceneFinished += OnCutSceneFinished;
+                            await UniTask.SwitchToMainThread();
+                            _cutSceneController.PlayCutScene(_currentCutSceneInfo.PlayableAsset);
+                        });
+                    }
+                    else
+                    {
+                        _logger.LogWarning(nameof(CutSceneState), $"CutScene \"{ctx.Id}\" not found");
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning(nameof(CutSceneState), "Context not specified or type mismatch");
+                }
             }
-            _dialogueProvider.DialogueStarted += OnDialogueStarted;
-            _dialogueProvider.DialogueStarting += OnDialogueStarting;
-            _dialogueService.ClientServed += OnClientServed;
-            _dialogueProvider.DialogueEnded += OnDialogueEnded;
-            _dialoguePresenter.NextLineRequested += _dialogueService.NextDialogueLine;
-            _dialoguePresenter.SkipRequested += _dialogueService.SkipDialogue;
-            _dialoguePresenter.ChoiceMade += _dialogueService.MakeDialogueChoice;
-
-            _inputService.Pause += OnPause;
-            _inputService.SetActionMap(ActionMap.Player);
-            Cursor.lockState = CursorLockMode.Locked;
-            _logger.Log($"{nameof(MainMenuState)}.{nameof(Enter)}()");
-            Debug.LogError("TrySpan");
-            Task.Run(() => SpawnClientAsync());
         }
         public override void Exit(GameState nextState)
         {
             base.Exit(nextState);
 
+            _inputService.Cancel -= OnPause;
             _dialogueProvider.DialogueStarted -= OnDialogueStarted;
-            _dialogueProvider.DialogueStarting -= OnDialogueStarting;
-            _dialogueService.ClientServed -= OnClientServed;
             _dialogueProvider.DialogueEnded -= OnDialogueEnded;
-            _dialoguePresenter.NextLineRequested -= _dialogueService.NextDialogueLine;
-            _dialoguePresenter.SkipRequested -= _dialogueService.SkipDialogue;
-            _dialoguePresenter.ChoiceMade -= _dialogueService.MakeDialogueChoice;
-
-            _inputService.Pause -= OnPause;
-            _inputService.SetActionMap(ActionMap.UI);
-            Cursor.lockState = CursorLockMode.None;
-            _logger.Log($"{nameof(MainMenuState)}.{nameof(Exit)}()");
+            _cutSceneControllerRegistry.ControllerRegistered -= OnCutSceneControllerRegistered;
+            _cutSceneController = null;
+            _logger.Log($"{nameof(CutSceneState)}.{nameof(Exit)}()");
         }
 
         private readonly ILogger _logger;
         private readonly IGameFlow _gameFlow;
-
+        private readonly IStateSwitcher<GameState> _stateSwitcher;
         private readonly IInputActionService _inputService;
         private readonly IDialoguePresenter _dialoguePresenter;
         private readonly IDialogueProvider _dialogueProvider;
         private readonly IDialogueService _dialogueService;
-        private readonly IClientController _clientController;
-        private readonly GameSession _gameSession;
+        private readonly ICutSceneInfoProvider _cutSceneInfoProvider;
+        private readonly ICutSceneControllerRegistry _cutSceneControllerRegistry;
+        private ICutSceneController? _cutSceneController;
+        private CutSceneInfo? _currentCutSceneInfo;
+        private bool _isFirstDialogueAction;
+        private GameState _previousGameState;
+        private bool _isDialogueStarted = false;
 
         private void OnPause()
         {
             _gameFlow.PauseLevel();
         }
-        private void OnDialogueStarted(int id)
+        private void OnDialogueStarted(string id)
         {
-            _inputService.SetActionMap(ActionMap.UI);
+            _dialoguePresenter.ShowInteractionTooltip = false;
             _dialoguePresenter.Enable();
         }
-        private void OnDialogueStarting(int id)
-        {
-            if (id > 0) // костыль: 0 - кофемашина, остальное - персонажи
-            {
-                if (_gameSession.IsCoffeeInPlayerHands)
-                {
-                    _dialogueService.SetVariable("coffee_ready"); // своеобразный триггер, в false перейдёт само из ink скрипта
-                }
-            }    
-        }
-        private void OnDialogueEnded(int id)
+        private void OnDialogueEnded(string id)
         {
             _dialoguePresenter.Disable();
-            _inputService.SetActionMap(ActionMap.Player);
+            Debug.LogError($"{nameof(OnDialogueEnded)}({id})");
         }
-        private void OnClientServed(int id, int reputation, float revenue)
+        private void OnCutSceneControllerRegistered(ICutSceneController cutSceneController)
         {
-            Debug.LogError($"ReputationDelta: {reputation}");
-            _gameSession.AddReview(reputation);
-            _gameSession.AddMoney(revenue);
-            _gameSession.IsCoffeeInPlayerHands = false;
-            _clientController.ClientReturned += OnClientReturned;
-            _clientController.ReturnCurrentClient();
-            if (id == 3) // last client of shift
+            _cutSceneController = cutSceneController;
+        }
+        private void OnCutSceneFinished(PlayableAsset playableAsset)
+        {
+            UniTask.SwitchToMainThread();
+            if (_cutSceneController != null)
             {
-
+                _cutSceneController.EventSignaled -= OnCutSceneEventSignaled;
+                _cutSceneController.CutSceneFinished -= OnCutSceneFinished;
+            }
+            else
+            {
+                _logger.LogWarning(nameof(CutSceneState), $"CutSceneController is null since cut scene {playableAsset.name} is finished");
+            }
+            if (_isDialogueStarted)
+            {
+                _dialogueService.NextDialogueLine();
+            }
+            _stateSwitcher.TransitTo(_previousGameState);
+        }
+        private void OnCutSceneEventSignaled((PlayableAsset sender, SignalAsset signal) args)
+        {
+            UniTask.SwitchToMainThread();
+            if (_currentCutSceneInfo is not null)
+            {
+                var actionInfo = _currentCutSceneInfo.ActionsInfo.FirstOrDefault(actionInfo => actionInfo.SignalTrigger == args.signal);
+                if (actionInfo?.IsDialogueAction ?? false)
+                {
+                    if (_isFirstDialogueAction)
+                    {
+                        _isFirstDialogueAction = false;
+                        _dialogueService.StartDialogue(_currentCutSceneInfo.DialogueId);
+                        _isDialogueStarted = true;
+                    }
+                    else
+                    {
+                        _dialogueService.NextDialogueLine();
+                    }
+                }
+            }
+            else
+            {
+                _logger.LogWarning(nameof(CutSceneState), $"CurrentCutSceneInfo is null since event {args.signal} is signaled");
             }
         }
+    }
+    public class CutSceneStateContext
+    {
+        public string Id { get; }
 
-        private void OnClientReturned()
+        public CutSceneStateContext(string id)
         {
-            _clientController.ClientReturned -= OnClientReturned;
-            _clientController.SendClient();
+            Id = id;
         }
-
-        private async Task SpawnClientAsync()
-        {
-            await Task.Delay(5000);
-            _clientController.SendClient();
-        }
-    }*/
+    }
 }

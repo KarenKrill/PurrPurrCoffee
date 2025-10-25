@@ -8,30 +8,35 @@ using KarenKrill.Storytelling.Abstractions;
 namespace PurrPurrCoffee.UI.Presenters
 {
     using Abstractions;
+    using System.Linq;
     using Views.Abstractions;
 
     public class DialoguePresenter : PresenterBase<IDialogueView>, IDialoguePresenter, IPresenter<IDialogueView>
     {
+        public bool ShowInteractionTooltip { get; set; }
 #nullable enable
         public event Action<int>? ChoiceMade;
-        public event Action? NextLineRequested;
-        public event Action? SkipRequested;
+        public event Action? Continued;
+        public event Action? Skipped;
 #nullable restore
 
         public DialoguePresenter(IViewFactory viewFactory,
             IPresenterNavigator navigator,
-            IDialogueProvider dialogueProvider) : base(viewFactory, navigator)
+            IDialogueProvider dialogueProvider,
+            IDialogueService dialogueService) : base(viewFactory, navigator)
         {
             _dialogueProvider = dialogueProvider;
+            _dialogueService = dialogueService;
         }
 
         protected override void Subscribe()
         {
-            OnDialogueStateUpdate(_dialogueProvider.CurrentDialogueState);
+            OnDialogueStateUpdate(_dialogueProvider.DialogueState);
             _dialogueProvider.DialogueStateChanged += OnDialogueStateUpdate;
             View.ChoiceMade += OnChoiceMade;
             View.NextLineRequested += OnNextLineRequested;
-            View.SkipRequested += OnSkipRequested; 
+            View.SkipRequested += OnSkipRequested;
+            View.ShowInteractionTooltip = ShowInteractionTooltip;
         }
         protected override void Unsubscribe()
         {
@@ -42,19 +47,32 @@ namespace PurrPurrCoffee.UI.Presenters
         }
 
         private readonly IDialogueProvider _dialogueProvider;
+        private readonly IDialogueService _dialogueService;
 
-        private void OnChoiceMade(int index) => ChoiceMade?.Invoke(index);
-        private void OnNextLineRequested() => NextLineRequested?.Invoke();
-        private void OnSkipRequested() => SkipRequested?.Invoke();
+        private void OnChoiceMade(int index)
+        {
+            _dialogueService.MakeDialogueChoice(index);
+            ChoiceMade?.Invoke(index);
+        }
+        private void OnNextLineRequested()
+        {
+            _dialogueService.NextDialogueLine();
+            Continued?.Invoke();
+        }
+        private void OnSkipRequested()
+        {
+            _dialogueService.SkipDialogue();
+            Skipped?.Invoke();
+        }
         private void OnDialogueStateUpdate(DialogueState currentDialogueState)
         {
             if (currentDialogueState != null)
             {
-                View.ActorName = currentDialogueState.Name_Temp;
+                View.ActorName = currentDialogueState.FlowName;
                 View.Line = currentDialogueState.Line;
-                View.Choices = currentDialogueState.Choices;
+                View.Choices = currentDialogueState.Choices.ToArray();
                 var isLineEmpty = string.IsNullOrEmpty(currentDialogueState.Line);
-                var isChoicesEmpty = currentDialogueState.Choices?.Length > 0;
+                var isChoicesEmpty = currentDialogueState.Choices?.Count > 0;
                 //View.Mode = isChoicesEmpty ? (isLineEmpty ? DialogueMode.Choices : DialogueMode.Both) : DialogueMode.Line;
                 View.Mode = isChoicesEmpty ? DialogueMode.Choices : DialogueMode.Line;
             }

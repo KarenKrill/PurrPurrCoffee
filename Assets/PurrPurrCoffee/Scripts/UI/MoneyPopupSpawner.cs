@@ -11,7 +11,7 @@ namespace PurrPurrCoffee
     public class MoneyPopupSpawner : MonoBehaviour
     {
         [Inject]
-        public void Initialize(GameSession gameSession, ClientController clientController)
+        public void Initialize(GameProfileSession gameSession, ClientController clientController)
         {
             _gameSession = gameSession;
             _clientController = clientController;
@@ -31,7 +31,7 @@ namespace PurrPurrCoffee
         [SerializeField] private AudioClip _moneyAudioClip;
 
         private AudioSource _audioSource;
-        private GameSession _gameSession;
+        private GameProfileSession _gameSession;
         private ClientController _clientController;
         private float _lastRevenue = 0;
 
@@ -41,12 +41,12 @@ namespace PurrPurrCoffee
         }
         private void OnEnable()
         {
-            _lastRevenue = _gameSession.CoffeeRrevenue;
-            _gameSession.CoffeeRevenueChanged += OnCoffeeRevenueChanged;
+            _lastRevenue = _gameSession.Revenue;
+            _gameSession.RevenueChanged += OnCoffeeRevenueChanged;
         }
         private void OnDisable()
         {
-            _gameSession.CoffeeRevenueChanged -= OnCoffeeRevenueChanged;
+            _gameSession.RevenueChanged -= OnCoffeeRevenueChanged;
         }
         private void OnCoffeeRevenueChanged(float revenue)
         {

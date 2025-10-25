@@ -15,9 +15,9 @@ namespace PurrPurrCoffee.Interactions
             Rigidbody = GetComponent<Rigidbody>();
         }
 
-        protected override void OnInteraction()
+        protected override bool OnInteraction(IInteractor interactor)
         {
-
+            return true;
         }
     }
 }

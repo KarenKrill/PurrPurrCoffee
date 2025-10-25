@@ -1,11 +1,12 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
+
 using Zenject;
 
 using KarenKrill.InteractionSystem.Abstractions;
 using KarenKrill.Storytelling.Abstractions;
-using UnityEngine;
 
-namespace PurrPurrCoffee.Interactions.Assets.PurrPurrCoffee.Scripts.Interactions
+namespace PurrPurrCoffee.Interactions
 {
     public class DialogInteractable : OutlineInteractableBase, IInteractable
     {
@@ -19,11 +20,11 @@ namespace PurrPurrCoffee.Interactions.Assets.PurrPurrCoffee.Scripts.Interactions
             _dialogueProvider = dialogueProvider;
         }
 
-        protected override void OnInteraction()
+        protected override bool OnInteraction(IInteractor interactor)
         {
             InteractionEvent.Invoke();
             _dialogueProvider.DialogueEnded += OnDialogueEnded;
-            _dialogueService.StartDialogue(_dialogueId);
+            _dialogueService.StartDialogue(_dialogueIdStr);
             // история отвечает за сюжет, то есть:
             // она даёт команду персонажам прийти в кофейню,
             // мониторит указанные события и выполняет указанные действия
@@ -31,17 +32,20 @@ namespace PurrPurrCoffee.Interactions.Assets.PurrPurrCoffee.Scripts.Interactions
 
             // начать диалог с персонажем
             // -- презентер выключает инпут пользователя
-
+            return true;
         }
-
-        private void OnDialogueEnded(int obj)
+        protected virtual void OnDialogueEnded(string id)
         {
             _dialogueProvider.DialogueEnded -= OnDialogueEnded;
             DialogEnded.Invoke();
         }
+        protected string GetDialogueVariableValue(string name)
+        {
+            return _dialogueService.GetVariable(name);
+        }
 
         [SerializeField]
-        private int _dialogueId = 0;
+        private string _dialogueIdStr = string.Empty;
 
         private IDialogueService _dialogueService;
         private IDialogueProvider _dialogueProvider;

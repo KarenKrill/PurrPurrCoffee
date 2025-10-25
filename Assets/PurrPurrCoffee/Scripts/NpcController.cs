@@ -1,26 +1,40 @@
-using UnityEngine;
-
-using System.Collections;
-using UnityEngine.AI;
-using PurrPurrCoffee.Interactions;
 using System;
+using System.Collections;
+
+using UnityEngine;
+using UnityEngine.AI;
+
+using PurrPurrCoffee.Interactions;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class NpcController : MonoBehaviour
 {
-    public Waypath Waypath { get => _waypath; set { _waypath = value; _isPathEnds = false; } }
+    public Waypath Waypath { get => _waypath; set { _waypoint = null; _waypath = value; _isPathEnds = false; } }
+    public Transform Waypoint { get => _waypoint; set { _waypath = null; _waypoint = value; _isPathEnds = false; } }
+    public float StopDistance { get; set; } = 2f;
+
     public event Action WaypathCompleted;
+    public event Action WaypointReached;
+    public event Action WaypointUnreachable;
 
     [SerializeField]
     private Animator _animator;
     [SerializeField]
     private Waypath _waypath;
+    [SerializeField]
+    private Transform _waypoint = null;
+    [SerializeField]
+    private Transform _headTransform;
+    [SerializeField, Min(0)]
+    private float _minUnreachableWaypointDetectTime = 1f;
     private NavMeshAgent _navMeshAgent;
     private DoorOpener _currentDoorOpener;
     private bool _isWaitingForAnimation;
     private Vector3 _target;
     private bool _isTargetSet = false;
     private bool _isPathEnds = false;
+    private bool _isReachedWaypoint = false;
+    private float _npcStopTime = 0f;
 
     private void Awake()
     {
@@ -29,7 +43,7 @@ public class NpcController : MonoBehaviour
     }
     private void Update()
     {
-        if (_waypath != null && !_isPathEnds && !_isWaitingForAnimation)
+        if ((_waypath != null || _waypoint != null) && !_isPathEnds && !_isWaitingForAnimation)
         {
             UpdateTarget();
 
@@ -38,9 +52,22 @@ public class NpcController : MonoBehaviour
                 if (_navMeshAgent.desiredVelocity.magnitude < 0.001f) // NPC стоит
                 {
                     _animator.SetBool("IsMoving", false);
+                    if (_waypoint != null)
+                    {
+                        if (_npcStopTime == 0)
+                        {
+                            _npcStopTime = Time.realtimeSinceStartup;
+                        }
+                        var timeSinceNpcStops = Time.realtimeSinceStartup - _npcStopTime;
+                        if (timeSinceNpcStops >= _minUnreachableWaypointDetectTime)
+                        {
+                            WaypointUnreachable?.Invoke();
+                        }
+                    }
                 }
                 else
                 {
+                    _npcStopTime = 0;
                     _animator.SetBool("IsMoving", true);
                     _animator.SetFloat("InputMagnitude", _navMeshAgent.velocity.magnitude);
                     /*Vector3 desiredDirection = _navMeshAgent.desiredVelocity.normalized;
@@ -104,22 +131,40 @@ public class NpcController : MonoBehaviour
     private bool _IsTargetReached => !_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance;//Vector3.Distance(transform.position, _target) <= _navMeshAgent.stoppingDistance;
     private void UpdateTarget()
     {
-        if (!_IsTargetSet)
+        if (!_IsTargetSet || _IsTargetReached)
         {
-            _target = _waypath.GetNextPoint(out _isPathEnds);
+            if (_waypath != null)
+            {
+                _target = _waypath.GetNextPoint(out _isPathEnds);
+            }
+            else
+            {
+                _target = _waypoint.position;
+            }
             _navMeshAgent.destination = _target;
             _isTargetSet = true;
         }
-        else if (_IsTargetReached)
+        if (_waypoint != null)
         {
-            Debug.Log("Target reached!");
-            _target = _waypath.GetNextPoint(out _isPathEnds);
-            _navMeshAgent.destination = _target;
-            _isTargetSet = true;
+            if ((_navMeshAgent.gameObject.transform.position - _waypoint.position).magnitude <= StopDistance)
+            {
+                if (!_isReachedWaypoint)
+                {
+                    _isReachedWaypoint = true;
+                    _animator.SetBool("IsMoving", true);
+                    _navMeshAgent.isStopped = true;
+                    WaypointReached?.Invoke();
+                }
+            }
+            else
+            {
+                _navMeshAgent.isStopped = false;
+                _isReachedWaypoint = false;
+                _animator.SetBool("IsMoving", false);
+            }
         }
         if (_isPathEnds)
         {
-            Debug.Log("PathEnds!");
             _animator.SetBool("IsMoving", false);
             WaypathCompleted?.Invoke();
         }

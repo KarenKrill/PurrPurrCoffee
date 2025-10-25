@@ -2,11 +2,16 @@
     "name": "PurrPurrCoffee.Interactions",
     "rootNamespace": "PurrPurrCoffee.Interactions",
     "references": [
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:96feb2566153bbc40bf0c282d9d9943d",
         "GUID:70b64406575c68f4385cf2b9d0e16eff",
         "GUID:f9f8cf945412fb14cb92e8e58a58b795",
         "GUID:f2b1cb4b2bc9d9a4c9b3de62a541d591",
+        "GUID:c912c18b242cf434fad0743e467b14c4",
         "GUID:1149c39a00cd39a4fa70b4ea9f240fc1",
-        "GUID:96feb2566153bbc40bf0c282d9d9943d"
+        "GUID:758fdfc8aacc7bd4a9e1195061e594c2",
+        "GUID:2c7c0e5af3b7bb043a8dd232845b3cd6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

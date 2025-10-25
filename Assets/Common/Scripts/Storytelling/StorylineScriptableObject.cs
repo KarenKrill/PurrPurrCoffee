@@ -6,9 +6,13 @@ namespace KarenKrill.Storytelling
     [CreateAssetMenu(fileName = "Storyline", menuName = nameof(Storytelling) + "/Storyline")]
     public class StorylineScriptableObject : ScriptableObject
     {
-        public string storyLineName = string.Empty;
-        public string description = string.Empty;
-        public bool isMain = true;
-        public List<QuestScriptableObject> quests = new();
+        [field: SerializeField]
+        public string Description { get; private set; } = string.Empty;
+        [field: SerializeField]
+        public bool IsMain { get; private set; } = true;
+        public IReadOnlyList<QuestScriptableObject> Quests => _quests;
+
+        [SerializeField]
+        private List<QuestScriptableObject> _quests = new();
     }
 }

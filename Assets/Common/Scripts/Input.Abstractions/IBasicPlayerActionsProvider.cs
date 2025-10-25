@@ -21,6 +21,7 @@ namespace KarenKrill.Input.Abstractions
 
         public event LookDelegate? Look;
         public event Action? LookCancel;
+        public event Action? MoveStarted;
         public event MoveDelegate? Move;
         public event Action? MoveCancel;
         public event Action? Sprint;

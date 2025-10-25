@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,9 +34,9 @@ namespace KarenKrill.StateSystem
 
         private Dictionary<T, IStateHandler<T>> _stateHandlers;
 
-        private void OnStateEnter(T fromState, T toState)
+        private void OnStateEnter(T fromState, T toState, object? context)
         {
-            _stateHandlers[toState].Enter(fromState);
+            _stateHandlers[toState].Enter(fromState, context);
         }
         private void OnStateExit(T fromState, T toState)
         {

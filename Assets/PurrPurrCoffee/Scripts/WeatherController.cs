@@ -91,7 +91,7 @@ public class WeatherController : MonoBehaviour, IWeatherController
         yield return new WaitForSeconds(.1f);
         _lightningStrikeLight.SetActive(false);
         yield return new WaitForSeconds(0.9f);
-        _creepyMan.SetActive(true);
+        //_creepyMan.SetActive(true);
         yield return new WaitForSeconds(0.9f);
         _lightningStrikeLight.SetActive(true);
         yield return new WaitForSeconds(.07f);
@@ -116,7 +116,7 @@ public class WeatherController : MonoBehaviour, IWeatherController
         _lightningStrikeLight.SetActive(true);
         yield return new WaitForSeconds(.05f);
         _lightningStrikeLight.SetActive(false);
-        _creepyMan.SetActive(false);
+        //_creepyMan.SetActive(false);
         LightningStrikeEnded?.Invoke();
     }
 }

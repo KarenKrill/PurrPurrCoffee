@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#nullable enable
+
+using UnityEngine;
 
 using KarenKrill.StateSystem.Abstractions;
 using KarenKrill.UI.Presenters.Abstractions;
@@ -22,7 +24,7 @@ namespace PurrPurrCoffee.GameStates
             _diagnosticInfoPresenter = diagnosticInfoPresenter;
             gameSettings.ShowFpsChanged += OnShowFpsChanged;
         }
-        public void Enter(GameState prevState)
+        public void Enter(GameState prevState, object? context = null)
         {
             _logger.Log($"{nameof(InitialState)}.{nameof(Enter)}()");
             _gameFlow.LoadMainMenu();

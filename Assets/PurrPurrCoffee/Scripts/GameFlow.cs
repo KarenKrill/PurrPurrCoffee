@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using KarenKrill.StateSystem.Abstractions;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-
-using KarenKrill.StateSystem.Abstractions;
 
 namespace PurrPurrCoffee
 {
     using Abstractions;
+    using PurrPurrCoffee.GameStates;
 
     public class GameFlow : IGameFlow
     {
@@ -72,11 +72,16 @@ namespace PurrPurrCoffee
         }
         private void OnLevelLoadCompleted(AsyncOperation obj)
         {
-            _stateSwitcher.TransitTo(GameState.Gameplay);
+            _stateSwitcher.TransitTo(GameState.Gameplay, new GameplayStateContext(true));
         }
         public void WinGame()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void PlayCutscene(string id)
+        {
+            _stateSwitcher.TransitTo(GameState.CutScene, new CutSceneStateContext(id));
         }
 
         private readonly IStateSwitcher<GameState> _stateSwitcher;

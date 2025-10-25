@@ -1,11 +1,13 @@
 // === GLOBAL VARIABLES ===
-VAR reputation = 0
+VAR star_raiting = 0
+VAR paid_amount = 0
 VAR expected_base = ""
 VAR expected_syrup = ""
 VAR served_base = ""
 VAR served_syrup = ""
 VAR coffee_ready = false
 VAR client = ""
+VAR playerName = "Alice"
 
 === coffee_machine ===
 -> coffee_base_choice
@@ -51,20 +53,23 @@ VAR client = ""
 === maria_result ===
 { served_base == expected_base and served_syrup == expected_syrup:
     Отлично. Именно то, что нужно.
-    ~ reputation = reputation + 2
+    ~ star_raiting = 5
+    ~ paid_amount = 8
     #rep_change:5
     #money:8
     -> on_client_served
 - else:
     { served_base == expected_base:
         Ну, почти. Но на будущее — без сиропов.
-        ~ reputation = reputation + 0
+        ~ star_raiting = 3
+        ~ paid_amount = 6
         #rep_change:3
         #money:6
         -> on_client_served
     - else:
         Это точно не капучино. Печально.
-        ~ reputation = reputation - 1
+        ~ star_raiting = 1
+        ~ paid_amount = 4
         #rep_change:1
         #money:4
         -> on_client_served
@@ -86,20 +91,23 @@ VAR client = ""
 === igor_result ===
 { served_base == expected_base and served_syrup == expected_syrup:
     В самый раз. Почувствуй бездну.
-    ~ reputation = reputation + 1
+    ~ star_raiting = 4
+    ~ paid_amount = 4
     #rep_change:4
     #money:4
     -> on_client_served
 - else:
     { served_base == expected_base:
         Неплохо, но чего-то лишнего ты плеснула.
-        ~ reputation = reputation + 0
+        ~ star_raiting = 1
+        ~ paid_amount = 4
         #rep_change:1
         #money:4
         -> on_client_served
     - else:
         ...
-        ~ reputation = reputation - 2
+        ~ star_raiting = 0
+        ~ paid_amount = 4
         #rep_change:0
         #money:4
         -> on_client_served
@@ -121,20 +129,23 @@ VAR client = ""
 === olga_result ===
 { served_base == expected_base and served_syrup == expected_syrup:
     Вот это по мне. Спасибо!
-    ~ reputation = reputation + 2
+    ~ star_raiting = 5
+    ~ paid_amount = 7
     #rep_change:5
     #money:7
     -> on_client_served
 - else:
     { served_base == expected_base:
         Я просила карамель… но и так сойдёт.
-        ~ reputation = reputation - 1
+        ~ star_raiting = 1
+        ~ paid_amount = 6
         #rep_change:1
         #money:6
         -> on_client_served
     - else:
         Серьёзно?.. Даже не раф. Удачи, девочка.
-        ~ reputation = reputation - 2
+        ~ star_raiting = 0
+        ~ paid_amount = 4
         #rep_change:0
         #money:4
         -> on_client_served
@@ -147,10 +158,11 @@ VAR client = ""
 
 // === SYSTEM NODES (called from Unity) ===
 === player_shift_1_intro ===
-Ты открываешь кофейню. За окнами морось.
-- Очередной день в моей любимой кофейне.
-- Как приятно сидеть с кружечкой горячего кофе, когда на улице дождливо.
-- Нужно сегодня хорошо постараться, чтобы позаботиться о моих котиках...
+- Где это я?
+- О нет, я опять уснула на работе.
+- Соберись, {playerName}, а то совсем всех клиентов растеряешь.
+- До открытия кофейни всего пара минут, приборку придётся отложить.
+//- Так, отлично, у меня есть ещё 10 минут до открытия. Нужно привести всё здесь в порядок.
 -> END
 
 === player_end_shift_1 ===

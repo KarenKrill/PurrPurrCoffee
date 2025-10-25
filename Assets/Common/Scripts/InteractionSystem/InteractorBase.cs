@@ -9,10 +9,10 @@ namespace KarenKrill.InteractionSystem
 
     public abstract class InteractorBase : MonoBehaviour, IInteractor
     {
-        public event Action<IInteractable>? Interaction;
+        public event Action<IInteractable?>? Interaction;
         public event Action<IInteractable, bool>? InteractionAvailabilityChanged;
 
-        public void Interact(IInteractable interactable)
+        public void Interact(IInteractable? interactable)
         {
             OnInteraction(interactable);
             Interaction?.Invoke(interactable);
@@ -23,7 +23,7 @@ namespace KarenKrill.InteractionSystem
             InteractionAvailabilityChanged?.Invoke(interactable, available);
         }
 
-        protected abstract void OnInteraction(IInteractable interactable);
+        protected abstract void OnInteraction(IInteractable? interactable);
         protected abstract void OnInteractionAvailabilityChanged(IInteractable interactable, bool available);
     }
 }

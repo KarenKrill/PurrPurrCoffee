@@ -4,7 +4,8 @@ using System;
 
 namespace KarenKrill.StateSystem.Abstractions
 {
-    public delegate void StateTransitionDelegate<T>(T fromState, T toState) where T : Enum;
+    public delegate void StateEnterDelegate<T>(T fromState, T toState, object? context) where T : Enum;
+    public delegate void StateExitDelegate<T>(T fromState, T toState) where T : Enum;
 
     public interface IStateMachine<T> where T : Enum
     {
@@ -12,8 +13,8 @@ namespace KarenKrill.StateSystem.Abstractions
         IStateSwitcher<T> StateSwitcher { get; }
 
 
-        public event StateTransitionDelegate<T>? StateEnter;
+        public event StateEnterDelegate<T>? StateEnter;
 
-        public event StateTransitionDelegate<T>? StateExit;
+        public event StateExitDelegate<T>? StateExit;
     }
 }

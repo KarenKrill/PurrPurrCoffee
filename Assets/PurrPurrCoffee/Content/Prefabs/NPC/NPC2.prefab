@@ -228,7 +228,7 @@ MonoBehaviour:
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
-  precomputeOutline: 0
+  precomputeOutline: 1
   bakeKeys: []
   bakeValues: []
 --- !u!136 &1833178088896866458
@@ -369,7 +369,7 @@ MonoBehaviour:
   DialogEnded:
     m_PersistentCalls:
       m_Calls: []
-  _dialogueId: 2
+  _dialogueIdStr: client_igor
 --- !u!54 &7083686086793810190
 Rigidbody:
   m_ObjectHideFlags: 0

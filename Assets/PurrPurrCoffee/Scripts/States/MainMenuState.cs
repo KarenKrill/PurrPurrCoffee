@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#nullable enable
+
+using UnityEngine;
 
 using KarenKrill.Input.Abstractions;
 using KarenKrill.StateSystem.Abstractions;
@@ -24,7 +26,7 @@ namespace PurrPurrCoffee.GameStates
             _mainMenuPresenter = mainMenuPresenter;
             _inputService = inputService;
         }
-        public override void Enter(GameState prevState)
+        public override void Enter(GameState prevState, object? context = null)
         {
             _mainMenuPresenter.NewGame += OnNewGame;
             _mainMenuPresenter.Exit += OnExit;

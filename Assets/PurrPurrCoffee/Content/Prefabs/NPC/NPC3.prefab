@@ -233,7 +233,7 @@ MonoBehaviour:
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
-  precomputeOutline: 0
+  precomputeOutline: 1
   bakeKeys: []
   bakeValues: []
 --- !u!136 &3392918286670594961
@@ -304,7 +304,7 @@ MonoBehaviour:
   DialogEnded:
     m_PersistentCalls:
       m_Calls: []
-  _dialogueId: 3
+  _dialogueIdStr: client_olga
 --- !u!195 &2516124424088058154
 NavMeshAgent:
   m_ObjectHideFlags: 0

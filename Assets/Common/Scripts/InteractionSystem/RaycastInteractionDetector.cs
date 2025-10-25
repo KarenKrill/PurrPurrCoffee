@@ -16,22 +16,21 @@ namespace KarenKrill.InteractionSystem
 
         protected override void InputSubscribe()
         {
-            _playerActionsProvider.Look += OnLook;
+            _playerActionsProvider.Look += OnLookOrMove;
+            _playerActionsProvider.Move += OnLookOrMove;
             _playerActionsProvider.Interact += OnInteract;
         }
         protected override void InputUnsubscribe()
         {
-            _playerActionsProvider.Look -= OnLook;
+            _playerActionsProvider.Look -= OnLookOrMove;
+            _playerActionsProvider.Move -= OnLookOrMove;
             _playerActionsProvider.Interact -= OnInteract;
         }
 
         private IBasicPlayerActionsProvider _playerActionsProvider;
 
-        private void OnLook(Vector2 lookDelta)
+        private void OnLookOrMove(Vector2 delta)
         {
-            //var cameraTransform = Camera.main.transform;
-            //var ray = new Ray(cameraTransform.position, cameraTransform.forward);
-            //var ray = new Ray(_interactor.transform.position, _interactor.transform.forward);
             var ray = new Ray(_interactorEyePoint.position, _interactorLookPoint.position - _interactorEyePoint.position);
             OnLookChanged(_interactor, ray);
         }

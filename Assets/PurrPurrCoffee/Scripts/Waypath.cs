@@ -16,7 +16,6 @@ public class Waypath : MonoBehaviour
             isLastPoint = true;
             _currentPoint = _points.Count - 1;
         }
-        Debug.Log($"Next target: {_points[_currentPoint].name}");
         return _points[_currentPoint].position;
     }
     public void ResetPath() => _currentPoint = -1;
