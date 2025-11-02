@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using KarenKrill.InteractionSystem.Abstractions;
+using KarenKrill.UniCore.Interactions.Abstractions;
 
 using PurrPurrCoffee.InventorySystem;
 using PurrPurrCoffee.InventorySystem.Abstractions;

@@ -3,8 +3,8 @@
 using System;
 using System.Linq;
 
-using KarenKrill.StateSystem.Abstractions;
-using KarenKrill.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.StateSystem.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
 
 namespace PurrPurrCoffee.States
 {

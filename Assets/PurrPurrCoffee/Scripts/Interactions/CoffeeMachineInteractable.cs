@@ -6,7 +6,7 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-using KarenKrill.InteractionSystem.Abstractions;
+using KarenKrill.UniCore.Interactions.Abstractions;
 
 using PurrPurrCoffee.InventorySystem;
 

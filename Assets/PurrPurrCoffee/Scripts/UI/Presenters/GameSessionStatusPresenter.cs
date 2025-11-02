@@ -1,6 +1,6 @@
-﻿using KarenKrill.Diagnostics.Abstractions;
-using KarenKrill.UI.Presenters.Abstractions;
-using KarenKrill.UI.Views.Abstractions;
+﻿using KarenKrill.UniCore.Diagnostics.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.UI.Views.Abstractions;
 
 namespace PurrPurrCoffee.UI.Presenters
 {

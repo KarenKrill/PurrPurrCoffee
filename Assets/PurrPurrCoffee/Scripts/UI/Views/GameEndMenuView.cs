@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
-using KarenKrill.UI.Views;
+using KarenKrill.UniCore.UI.Views;
 
 namespace PurrPurrCoffee.UI.Views
 {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ink.Runtime;
 
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 using UnityEngine;
 
 namespace PurrPurrCoffee.Storytelling

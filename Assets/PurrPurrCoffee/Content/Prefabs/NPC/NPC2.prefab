@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5982079661386198574}
   - component: {fileID: 1872723183302657987}
-  - component: {fileID: 5798873232637676100}
+  - component: {fileID: 4782785078225703530}
   m_Layer: 3
   m_Name: InteractionTarget
   m_TagString: Untagged
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5798873232637676100
+--- !u!114 &4782785078225703530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2093878357543406816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10328d8e4981e547aa57c7e21e58c8c, type: 3}
+  m_Script: {fileID: 11500000, guid: e5116f0aabde10c4a9bf7d74e99afc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 5204720908537839942}
@@ -433,6 +433,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 3377320878212232681}
   _waypath: {fileID: 0}
+  _waypoint: {fileID: 0}
+  _headTransform: {fileID: 0}
+  _minUnreachableWaypointDetectTime: 1
 --- !u!114 &6995535016090635240
 MonoBehaviour:
   m_ObjectHideFlags: 0

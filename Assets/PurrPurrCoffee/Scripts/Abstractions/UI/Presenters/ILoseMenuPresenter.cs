@@ -2,7 +2,7 @@
 
 using System;
 
-using KarenKrill.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
 
 namespace PurrPurrCoffee.UI.Presenters.Abstractions
 {

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-using KarenKrill.StateSystem.Abstractions;
-using KarenKrill.UI.Presenters.Abstractions;
-using KarenKrill.StateSystem;
-using KarenKrill.UI.Presenters;
-using KarenKrill.UI.Views;
-using KarenKrill.Logging;
-using KarenKrill.Diagnostics;
-using KarenKrill.Utilities;
-using KarenKrill.InteractionSystem;
+using KarenKrill.UniCore.StateSystem.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.StateSystem;
+using KarenKrill.UniCore.UI.Presenters;
+using KarenKrill.UniCore.UI.Views;
+using KarenKrill.UniCore.Logging;
+using KarenKrill.UniCore.Diagnostics;
+using KarenKrill.UniCore.Utilities;
+using KarenKrill.UniCore.Interactions;
 
 namespace PurrPurrCoffee
 {

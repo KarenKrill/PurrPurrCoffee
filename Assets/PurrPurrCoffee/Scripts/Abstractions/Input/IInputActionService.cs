@@ -1,4 +1,4 @@
-using KarenKrill.Input.Abstractions;
+using KarenKrill.UniCore.Input.Abstractions;
 
 namespace PurrPurrCoffee.Input.Abstractions
 {

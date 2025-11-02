@@ -1,4 +1,4 @@
-﻿using KarenKrill.StateSystem.Abstractions;
+﻿using KarenKrill.UniCore.StateSystem.Abstractions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

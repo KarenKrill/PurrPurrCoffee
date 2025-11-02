@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using KarenKrill.UI.Views.Abstractions;
+using KarenKrill.UniCore.UI.Views.Abstractions;
 using System;
 using UnityEngine;
 

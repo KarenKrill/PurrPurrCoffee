@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-using KarenKrill.UI.Presenters.Abstractions;
-using KarenKrill.UI.Views.Abstractions;
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.UI.Views.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 
 namespace PurrPurrCoffee.UI.Presenters
 {

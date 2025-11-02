@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Zenject;
 
-using KarenKrill.InteractionSystem.Abstractions;
+using KarenKrill.UniCore.Interactions.Abstractions;
 
 using PurrPurrCoffee.Abstractions;
 using PurrPurrCoffee.InventorySystem.Abstractions;

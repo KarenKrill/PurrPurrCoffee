@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-using KarenKrill.UI.Views;
-using KarenKrill.Instantiattion;
+using KarenKrill.UniCore.UI.Views;
+using KarenKrill.UniCore.Instantiattion;
 
 namespace PurrPurrCoffee.UI.Views
 {

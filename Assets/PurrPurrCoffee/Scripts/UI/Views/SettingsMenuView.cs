@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using KarenKrill.UI.Views;
+using KarenKrill.UniCore.UI.Views;
 
 namespace PurrPurrCoffee.UI.Views
 {

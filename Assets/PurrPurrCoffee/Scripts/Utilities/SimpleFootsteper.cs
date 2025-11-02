@@ -1,4 +1,4 @@
-using KarenKrill.Movement;
+using KarenKrill.UniCore.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

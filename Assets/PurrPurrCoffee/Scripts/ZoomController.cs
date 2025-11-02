@@ -1,6 +1,6 @@
 #nullable enable
 using Cysharp.Threading.Tasks;
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 using PurrPurrCoffee.Abstractions;
 using System.Threading;
 using Unity.Cinemachine;

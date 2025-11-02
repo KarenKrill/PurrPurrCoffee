@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
     },
+    "com.karenkrill.unicore": {
+      "version": "https://github.com/KarenKrill/UniCore.git?path=Assets/UniCore",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e83587304df438c19fa7879f4decc574bf7a11eb"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

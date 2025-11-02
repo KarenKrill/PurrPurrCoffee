@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 
 namespace PurrPurrCoffee.Storytelling
 {

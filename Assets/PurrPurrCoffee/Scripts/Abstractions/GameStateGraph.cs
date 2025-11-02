@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-using KarenKrill.StateSystem.Abstractions;
+using KarenKrill.UniCore.StateSystem.Abstractions;
 
 namespace PurrPurrCoffee.Abstractions
 {

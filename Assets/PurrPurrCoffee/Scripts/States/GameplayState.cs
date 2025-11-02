@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-using KarenKrill.Input.Abstractions;
-using KarenKrill.StateSystem.Abstractions;
-using KarenKrill.Storytelling.Abstractions;
-using KarenKrill.UI.Presenters.Abstractions;
+using KarenKrill.UniCore.Input.Abstractions;
+using KarenKrill.UniCore.StateSystem.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
+using KarenKrill.UniCore.UI.Presenters.Abstractions;
 
 namespace PurrPurrCoffee.GameStates
 {

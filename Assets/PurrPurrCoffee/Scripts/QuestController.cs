@@ -1,4 +1,4 @@
-using KarenKrill.Storytelling;
+using KarenKrill.UniCore.Storytelling;
 using System;
 
 namespace PurrPurrCoffee

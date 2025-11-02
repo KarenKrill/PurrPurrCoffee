@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using KarenKrill.StateSystem.Abstractions;
+using KarenKrill.UniCore.StateSystem.Abstractions;
 using UnityEngine;
 
 namespace PurrPurrCoffee.GameStates
@@ -8,9 +8,9 @@ namespace PurrPurrCoffee.GameStates
     using Abstractions;
     using Cysharp.Threading.Tasks;
     using Input.Abstractions;
-    using KarenKrill.Input.Abstractions;
-    using KarenKrill.Storytelling.Abstractions;
-    using KarenKrill.UI.Presenters.Abstractions;
+    using KarenKrill.UniCore.Input.Abstractions;
+    using KarenKrill.UniCore.Storytelling.Abstractions;
+    using KarenKrill.UniCore.UI.Presenters.Abstractions;
     using PurrPurrCoffee.UI.Presenters.Abstractions;
     using PurrPurrCoffee.UI.Views.Abstractions;
     using States;

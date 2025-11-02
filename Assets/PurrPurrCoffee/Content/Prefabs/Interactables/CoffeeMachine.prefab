@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300257703311496688}
   - component: {fileID: 1285664291076345735}
-  - component: {fileID: 4300819892493393207}
+  - component: {fileID: 1285796994101548141}
   m_Layer: 3
   m_Name: ScreenInteractionTarget
   m_TagString: Untagged
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33703738, y: 0.37450337, z: 0.39796782}
   m_Center: {x: 0.04156956, y: 0.28160584, z: 0.25736046}
---- !u!114 &4300819892493393207
+--- !u!114 &1285796994101548141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1664800611678317530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10328d8e4981e547aa57c7e21e58c8c, type: 3}
+  m_Script: {fileID: 11500000, guid: e5116f0aabde10c4a9bf7d74e99afc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 8578887078619078718}
@@ -268,7 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4542531816963215301}
   - component: {fileID: 3039114940266484868}
-  - component: {fileID: 4884628230930198116}
+  - component: {fileID: 860782656609525395}
   m_Layer: 3
   m_Name: InteractionTarget
   m_TagString: Untagged
@@ -312,7 +312,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.025192901, y: 0.014162242, z: 0.0043502115}
   m_Center: {x: 0.0000029101968, y: 0.0059744837, z: 0.0029561347}
---- !u!114 &4884628230930198116
+--- !u!114 &860782656609525395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3443232276589455542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10328d8e4981e547aa57c7e21e58c8c, type: 3}
+  m_Script: {fileID: 11500000, guid: e5116f0aabde10c4a9bf7d74e99afc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 8578887078619078718}

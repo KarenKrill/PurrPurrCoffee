@@ -1,4 +1,4 @@
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 using PurrPurrCoffee.Abstractions;
 using System;
 using System.Collections;

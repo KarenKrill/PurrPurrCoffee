@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 using Zenject;
 
-using KarenKrill.InteractionSystem.Abstractions;
-using KarenKrill.Storytelling.Abstractions;
+using KarenKrill.UniCore.Interactions.Abstractions;
+using KarenKrill.UniCore.Storytelling.Abstractions;
 
 namespace PurrPurrCoffee.Interactions
 {

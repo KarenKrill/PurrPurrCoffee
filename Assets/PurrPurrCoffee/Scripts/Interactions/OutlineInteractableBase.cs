@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-using KarenKrill.InteractionSystem.Abstractions;
-using KarenKrill.InteractionSystem;
+using KarenKrill.UniCore.Interactions.Abstractions;
+using KarenKrill.UniCore.Interactions;
 
 namespace PurrPurrCoffee.Interactions
 {
